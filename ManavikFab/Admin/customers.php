@@ -124,6 +124,7 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
             position: fixed;
             top: 0;
             left: 0;
+            /* match orders page width for consistent layout */
             width: 240px;
             height: 100vh;
             z-index: 1000;
@@ -135,6 +136,7 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
             backdrop-filter: blur(10px);
             border-radius: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            /* align with sidebar width (same approach as orders.php) */
             margin-left: 240px;
         }
         
@@ -295,7 +297,6 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
             
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 admin-content p-4">
-                <div class="admin-content p-4">
                     <!-- Header -->
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div>
@@ -497,7 +498,6 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
                             </ul>
                         </nav>
                     </div>
-                </div>
             </div>
         </div>
     </div>

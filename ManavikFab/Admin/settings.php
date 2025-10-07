@@ -90,6 +90,10 @@ $shipping_settings = [
             backdrop-filter: blur(10px);
             border-radius: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            /* ensure the main content stretches the full viewport height
+               and reduce bottom padding so tables/content sit closer to page bottom */
+            min-height: 100vh;
+            padding-bottom: 1rem;
         }
         
         .sidebar-link {
@@ -247,7 +251,6 @@ $shipping_settings = [
             
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 admin-content p-4">
-                <div class="admin-content p-4">
                     <!-- Header -->
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div>
@@ -613,7 +616,6 @@ $shipping_settings = [
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>

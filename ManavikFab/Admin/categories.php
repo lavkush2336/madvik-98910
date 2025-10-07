@@ -302,7 +302,6 @@ $parent_categories = ['None', 'Ethnic Wear', 'Western Wear', 'Accessories'];
             
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 admin-content p-4">
-                <div class="admin-content p-4">
                     <!-- Header -->
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div>
@@ -502,7 +501,6 @@ $parent_categories = ['None', 'Ethnic Wear', 'Western Wear', 'Accessories'];
                             </ul>
                         </nav>
                     </div>
-                </div>
             </div>
         </div>
     </div>

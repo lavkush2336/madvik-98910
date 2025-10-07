@@ -215,7 +215,6 @@ $customer_metrics = [
             
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 admin-content p-4">
-                <div class="admin-content p-4">
                     <!-- Header -->
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div>
@@ -466,7 +465,6 @@ $customer_metrics = [
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>

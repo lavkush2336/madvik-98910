@@ -322,7 +322,6 @@ $locations = ['All', 'Warehouse A', 'Warehouse B', 'Warehouse C'];
             
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 admin-content p-4">
-                <div class="admin-content p-4">
                     <!-- Header -->
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div>
@@ -550,7 +549,6 @@ $locations = ['All', 'Warehouse A', 'Warehouse B', 'Warehouse C'];
                             </ul>
                         </nav>
                     </div>
-                </div>
             </div>
         </div>
     </div>
