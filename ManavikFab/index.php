@@ -29,55 +29,106 @@ include 'connection.php';
 <style>
     body {
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #f8c9d8 0%, #f4b6cc 100%);
+        background: #ffffff;
     }
     .navbar-brand {
         font-size: 1.8rem;
         font-weight: 700;
         color: #2d2d2d;
     }
+    /* Site navbar: sticky, elevated, and interactive */
+    .site-navbar{position:sticky;top:1rem;z-index:1050;background:rgba(255,255,255,0.96);box-shadow:0 6px 18px rgba(0,0,0,0.06);transition:background .2s ease,box-shadow .2s ease,padding .2s ease}
+    .site-navbar.scrolled{background:#ffffff;box-shadow:0 8px 28px rgba(0,0,0,0.12)}
+    .site-navbar .container{display:flex;align-items:center;justify-content:space-between}
+    .site-navbar .nav-links .nav-link{color:#444;padding:.45rem .65rem;transition:color .18s ease,transform .18s ease}
+    .site-navbar .nav-links .nav-link:hover{color:#ff5f99;text-decoration:none;transform:translateY(-2px)}
+    .site-navbar .nav-icons{display:flex;align-items:center;gap:1.5rem}
+    .nav-icon{color:#444;font-size:1.12rem;display:inline-flex;align-items:center;justify-content:center;padding:.45rem;border-radius:8px;transition:color .18s ease,transform .18s ease,background .18s ease}
+    .nav-icon:hover{color:#ff5f99;transform:translateY(-3px);background:rgba(0,0,0,0.03)}
+    .nav-badge{font-size:.65rem;padding:.18rem .4rem;border-radius:999px}
+    /* Cart wrapper and badge positioning */
+    .nav-cart{position:relative;display:inline-flex}
+    .nav-cart .nav-badge{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 5px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-size:.62rem;background:#dc3545;color:#fff;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.12)}
+    /* Hero: full-bleed banner with centered overlay */
     .hero-section {
-        background: linear-gradient(135deg, #f8c9d8 0%, #f4b6cc 100%);
-        min-height: 80vh;
+        position: relative;
+        min-height: 78vh;
         display: flex;
         align-items: center;
-    }
-    .category-card {
-        background: white;
-        border-radius: 1rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        justify-content: center;
+        color: #fff;
         overflow: hidden;
     }
+    .hero-banner{
+        position:absolute;
+        inset:0;
+        /* Use the requested background image */
+        background-image: url('images/image.jpeg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        filter: contrast(0.98) saturate(1.02);
+        transform: scale(1.02);
+    }
+    /* Gentle dark overlay to improve text contrast */
+    .hero-overlay{
+        position:absolute;inset:0;
+        /* Subtle dark translucent overlay for readable white text */
+        background: rgba(0,0,0,0.32);
+        backdrop-filter: blur(2px);
+    }
+    .hero-content{position:relative;z-index:2;padding:3rem 1rem;max-width:1100px;width:100%;display:flex;flex-direction:column;align-items:center;text-align:center}
+    .hero-headline{font-size:3.6rem;font-weight:800;color:#fff;margin-bottom:0.6rem;line-height:1.02;text-shadow:0 8px 30px rgba(12,12,12,0.45)}
+    .hero-sub{color:rgba(255,255,255,0.92);font-size:1.25rem;margin-bottom:1.25rem;max-width:820px}
+    .hero-cta .btn{border-radius:999px;padding:1rem 2.4rem;font-weight:800;font-size:1.05rem}
+    .hero-cta .btn-primary-custom{background:linear-gradient(90deg,#ff7ab6,#ff5f99);color:#fff;box-shadow:0 12px 40px rgba(255,95,153,0.18)}
+    .hero-cta .btn-outline-light{background:rgba(255,255,255,0.9);color:#3a2a3f;font-weight:700}
+    .hero-side-img{display:none}
+    .category-card {
+        background: white;
+        padding: 1rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transition: transform 280ms cubic-bezier(.2,.9,.2,1), box-shadow 280ms ease;
+        overflow: hidden;
+        text-align: center;
+        border: 1px solid rgba(0,0,0,0.04);
+    }
     .category-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 28px rgba(0,0,0,0.10);
     }
     .product-card {
         background: white;
-        border-radius: 1rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        padding: 1rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transition: transform 280ms cubic-bezier(.2,.9,.2,1), box-shadow 280ms ease;
         overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.04);
     }
     .product-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.12);
     }
-    .btn-primary-custom {
-        background: linear-gradient(135deg, #f8c9d8 0%, #f4b6cc 100%);
-        border: none;
-        color: #2d2d2d;
-        font-weight: 600;
-        padding: 0.75rem 2rem;
-        border-radius: 2rem;
-        transition: all 0.3s ease;
-    }
-    .btn-primary-custom:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
+    .btn-primary-custom {background:linear-gradient(90deg,#f8c9d8,#f4b6cc);border:none;color:#3a2a3f;font-weight:700;padding:0.65rem 1.6rem;border-radius:999px;transition:transform .18s ease, box-shadow .18s ease}
+    .btn-primary-custom:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(244,182,204,0.18)}
     .footer {
         background: #2d2d2d;
         color: white;
+    }
+    /* Strongly enforce readable footer colors to override conflicts */
+    footer.footer p,
+    footer.footer li,
+    footer.footer .text-muted,
+    footer.footer a,
+    footer.footer ul li a {
+        color: #CCCCCC !important;
+    }
+    footer.footer a:hover,
+    footer.footer ul li a:hover {
+        color: #FFFFFF !important;
+        text-decoration: none !important;
     }
     .search-bar {
         border-radius: 2rem;
@@ -88,193 +139,159 @@ include 'connection.php';
         border-color: #f4b6cc;
         box-shadow: 0 0 0 0.2rem rgba(248, 201, 216, 0.3);
     }
+    .category-grid .icon{font-size:2rem}
+    .product-card .card-img-top{object-fit:cover;height:260px}
+    @media (max-width:992px){
+        .hero-headline{font-size:2.4rem}
+        .hero-sub{font-size:1rem}
+        .hero-cta .btn{padding:.85rem 1.6rem;font-size:.98rem}
+    }
+    @media (max-width:576px){
+        .hero-section{min-height:60vh}
+        .hero-headline{font-size:1.9rem}
+        .hero-sub{font-size:.95rem}
+        .hero-cta .btn{padding:.7rem 1.25rem;font-size:.9rem}
+    }
+    /* Subsequent sections should sit on a white background */
+    .content-section{background:#ffffff}
+    /* Extra separation between hero and category section */
+    .category-section{margin-top:3.5rem}
+
+    /* Make interface feel alive: transitions and hover states for buttons and cards */
+    .btn, .btn-primary-custom, .btn-outline-light {
+        transition: all 0.3s ease;
+    }
+    /* Clear visual change on button hover */
+    .btn-primary-custom:hover{
+        background-image: linear-gradient(90deg,#ff5fa8,#ff4f87);
+        color: #fff;
+        transform: translateY(-3px);
+        box-shadow: 0 14px 36px rgba(255,95,153,0.14);
+    }
+    .btn-outline-light:hover{
+        background-color:#ffffff;
+        color:#3a2a3f;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    /* Apply a unified transition and hover scale to cards */
+    .category-card, .product-card {
+        transition: all 0.3s ease;
+    }
+    .category-card:hover, .product-card:hover {
+        transform: translateY(-5px) scale(1.03);
+    }
 </style>
 
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <nav class="site-navbar">
         <div class="container">
-            <a class="navbar-brand" href="index.php">
-                <i class="bi bi-heart-fill text-danger me-2"></i>ManavikFab
-            </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        Categories
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="products.php?category=ethnic">Ethnic Wear</a></li>
-                        <li><a class="dropdown-item" href="products.php?category=western">Western Wear</a></li>
-                        <li><a class="dropdown-item" href="products.php?category=sarees">Sarees</a></li>
-                        <li><a class="dropdown-item" href="products.php?category=lehengas">Lehengas</a></li>
-                        <li><a class="dropdown-item" href="products.php?category=accessories">Accessories</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="products.php">All Products</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="about.php">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.php">Contact</a>
-                </li>
-            </ul>
-            
-            <form class="d-flex me-3">
-                <input class="form-control search-bar" type="search" placeholder="Search for products..." aria-label="Search">
-            </form>
-            
+            <!-- Left: Logo -->
             <div class="d-flex align-items-center">
-                <a href="wishlist.php" class="btn btn-outline-light me-2">
-                    <i class="bi bi-heart"></i>
+                <a class="navbar-brand me-3" href="index.php">
+                    <i class="bi bi-heart-fill text-danger me-2"></i>ManavikFab
                 </a>
-                <a href="cart.php" class="btn btn-outline-light me-2">
-                    <i class="bi bi-cart3"></i>
-                    <span class="badge bg-danger ms-1">3</span>
-                </a>
+                <!-- Mobile toggle -->
+                <button class="btn d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#siteNavCollapse">
+                    <i class="bi bi-list" style="font-size:1.25rem"></i>
+                </button>
+            </div>
+
+            <!-- Center: Links -->
+            <div class="collapse d-lg-block" id="siteNavCollapse">
+                <ul class="nav nav-links mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">New Arrivals</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Collections</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Dresses</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Sale</a></li>
+                </ul>
+            </div>
+
+            <!-- Right: Icons -->
+            <div class="nav-icons">
+                <button class="btn nav-icon" aria-label="Search"><i class="bi bi-search"></i></button>
                 <?php if(isset($_SESSION['user_id'])): ?>
-                    <div class="dropdown">
-                        <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i> My Account
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-                            <li><a class="dropdown-item" href="orders.php">My Orders</a></li>
-                            <li><a class="dropdown-item" href="wishlist.php">Wishlist</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                        </ul>
-                    </div>
+                    <a href="profile.php" class="nav-icon" title="Profile"><i class="bi bi-person-circle"></i></a>
                 <?php else: ?>
-                    <a href="login.php" class="btn btn-outline-primary me-2">Login</a>
-                    <a href="signup.php" class="btn btn-primary-custom">Sign Up</a>
+                    <a href="login.php" class="nav-icon" title="Login"><i class="bi bi-box-arrow-in-right"></i></a>
                 <?php endif; ?>
+                <a href="wishlist.php" class="nav-icon" title="Wishlist"><i class="bi bi-heart"></i></a>
+                <a href="cart.php" class="nav-icon nav-cart" title="Cart">
+                    <i class="bi bi-cart3"></i>
+                    <span class="nav-badge">3</span>
+                </a>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
 <!-- Hero Section -->
 <section class="hero-section">
-    <div class="container">
+    <div class="hero-banner"></div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
         <div class="row align-items-center">
             <div class="col-lg-6" data-aos="fade-right">
-                <h1 class="display-4 fw-bold mb-4">Discover Your Perfect Style</h1>
-                <p class="lead mb-4">Explore our exclusive collection of ethnic and western wear designed especially for the modern Indian woman.</p>
-                <div class="d-flex gap-3">
-                    <a href="products.php" class="btn btn-primary-custom btn-lg">Shop Now</a>
-                    <a href="products.php?category=new-arrivals" class="btn btn-outline-primary btn-lg">New Arrivals</a>
+                <h2 class="hero-headline">ManavikFab</h2>
+                <p class="hero-sub">Premium fashion for women — curated collections, seasonal drops, and exclusive designs.</p>
+                <div class="hero-cta d-flex gap-3">
+                    <a href="products.php" class="btn btn-primary-custom">Shop Now</a>
+                    <a href="blog.php" class="btn btn-outline-light" style="background:rgba(255,255,255,0.85);color:#3a2a3f;">Explore Article</a>
                 </div>
             </div>
-            <div class="col-lg-6" data-aos="fade-left">
-                <img src="images/hero-fashion.jpg" alt="Fashion Collection" class="img-fluid rounded-3 shadow">
+            <div class="col-lg-6 text-end" data-aos="fade-left">
+                <img src="images/hero-fashion.jpg" alt="Fashion" class="hero-side-img img-fluid">
             </div>
         </div>
     </div>
 </section>
 
-<!-- Categories Section -->
-<section class="py-5">
+<!-- Categories Section (Shop by Category) -->
+<section class="py-5 content-section category-section">
     <div class="container">
         <h2 class="text-center mb-5" data-aos="fade-up">Shop by Category</h2>
-        <div class="row g-4">
-            <div class="col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="100">
-                <div class="category-card text-center p-3">
-                    <i class="bi bi-heart-fill text-danger" style="font-size: 2rem;"></i>
-                    <h6 class="mt-3">Ethnic Wear</h6>
-                    <small class="text-muted">Traditional Elegance</small>
+        <div class="row g-3 category-grid">
+            <?php
+            $cats = [
+                ['icon'=>'bi-heart-fill','title'=>'Ethnic Wear','sub'=>'Traditional Elegance'],
+                ['icon'=>'bi-star-fill','title'=>'Western Wear','sub'=>'Modern Fashion'],
+                ['icon'=>'bi-gem','title'=>'Sarees','sub'=>'Timeless Beauty'],
+                ['icon'=>'bi-flower1','title'=>'Lehengas','sub'=>'Festive Collection'],
+                ['icon'=>'bi-diamond','title'=>'Accessories','sub'=>'Complete Your Look'],
+                ['icon'=>'bi-fire','title'=>'New Arrivals','sub'=>'Latest Trends']
+            ];
+            foreach($cats as $i=>$c):
+            ?>
+            <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="<?php echo ($i+1)*80; ?>">
+                <div class="category-card">
+                    <div class="icon text-danger mb-2"><i class="bi <?php echo $c['icon']; ?>"></i></div>
+                    <h6 class="mb-1"><?php echo $c['title']; ?></h6>
+                    <small class="text-muted"><?php echo $c['sub']; ?></small>
                 </div>
             </div>
-            <div class="col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="200">
-                <div class="category-card text-center p-3">
-                    <i class="bi bi-star-fill text-warning" style="font-size: 2rem;"></i>
-                    <h6 class="mt-3">Western Wear</h6>
-                    <small class="text-muted">Modern Fashion</small>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="300">
-                <div class="category-card text-center p-3">
-                    <i class="bi bi-gem text-info" style="font-size: 2rem;"></i>
-                    <h6 class="mt-3">Sarees</h6>
-                    <small class="text-muted">Timeless Beauty</small>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="400">
-                <div class="category-card text-center p-3">
-                    <i class="bi bi-flower1 text-success" style="font-size: 2rem;"></i>
-                    <h6 class="mt-3">Lehengas</h6>
-                    <small class="text-muted">Festive Collection</small>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="500">
-                <div class="category-card text-center p-3">
-                    <i class="bi bi-diamond text-primary" style="font-size: 2rem;"></i>
-                    <h6 class="mt-3">Accessories</h6>
-                    <small class="text-muted">Complete Your Look</small>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="600">
-                <div class="category-card text-center p-3">
-                    <i class="bi bi-fire text-danger" style="font-size: 2rem;"></i>
-                    <h6 class="mt-3">New Arrivals</h6>
-                    <small class="text-muted">Latest Trends</small>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
 
 <!-- Featured Products -->
-<section class="py-5 bg-light">
+<section class="py-5 content-section">
     <div class="container">
         <h2 class="text-center mb-5" data-aos="fade-up">Featured Products</h2>
         <div class="row g-4">
             <?php
-            // Sample featured products data
+            // Sample featured products data (placeholders)
             $featured_products = [
-                [
-                    'name' => 'Embroidered Silk Saree',
-                    'price' => '₹2,499',
-                    'original_price' => '₹3,999',
-                    'image' => 'images/product1.jpg',
-                    'rating' => 4.5
-                ],
-                [
-                    'name' => 'Designer Lehenga Set',
-                    'price' => '₹5,999',
-                    'original_price' => '₹8,999',
-                    'image' => 'images/product2.jpg',
-                    'rating' => 4.8
-                ],
-                [
-                    'name' => 'Cotton Kurti with Palazzo',
-                    'price' => '₹1,299',
-                    'original_price' => '₹1,999',
-                    'image' => 'images/product3.jpg',
-                    'rating' => 4.3
-                ],
-                [
-                    'name' => 'Western Dress Collection',
-                    'price' => '₹1,899',
-                    'original_price' => '₹2,499',
-                    'image' => 'images/product4.jpg',
-                    'rating' => 4.6
-                ]
+                ['name'=>'Embroidered Silk Saree','price'=>'₹2,499','original_price'=>'₹3,999','image'=>'images/product1.jpg','rating'=>4.5],
+                ['name'=>'Designer Lehenga Set','price'=>'₹5,999','original_price'=>'₹8,999','image'=>'images/product2.jpg','rating'=>4.8],
+                ['name'=>'Cotton Kurti with Palazzo','price'=>'₹1,299','original_price'=>'₹1,999','image'=>'images/product3.jpg','rating'=>4.3],
+                ['name'=>'Western Dress Collection','price'=>'₹1,899','original_price'=>'₹2,499','image'=>'images/product4.jpg','rating'=>4.6]
             ];
-            
             foreach($featured_products as $index => $product):
             ?>
-            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 100; ?>">
+            <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="<?php echo ($index + 1) * 80; ?>">
                 <div class="product-card h-100">
                     <img src="<?php echo $product['image']; ?>" class="card-img-top" alt="<?php echo $product['name']; ?>">
                     <div class="card-body">
@@ -282,7 +299,7 @@ include 'connection.php';
                         <div class="d-flex align-items-center mb-2">
                             <div class="text-warning me-2">
                                 <?php for($i = 1; $i <= 5; $i++): ?>
-                                    <i class="bi bi-star<?php echo $i <= $product['rating'] ? '-fill' : ''; ?>"></i>
+                                    <i class="bi bi-star<?php echo $i <= round($product['rating']) ? '-fill' : ''; ?>"></i>
                                 <?php endfor; ?>
                             </div>
                             <small class="text-muted">(<?php echo $product['rating']; ?>)</small>
@@ -290,7 +307,7 @@ include 'connection.php';
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
                                 <span class="fw-bold text-danger"><?php echo $product['price']; ?></span>
-                                <small class="text-muted text-decoration-line-through"><?php echo $product['original_price']; ?></small>
+                                <small class="text-muted text-decoration-line-through ms-2"><?php echo $product['original_price']; ?></small>
                             </div>
                             <button class="btn btn-sm btn-outline-primary">
                                 <i class="bi bi-cart-plus"></i>
@@ -308,7 +325,7 @@ include 'connection.php';
 </section>
 
 <!-- Offers Section -->
-<section class="py-5">
+<section class="py-5 content-section">
     <div class="container">
         <div class="row g-4">
             <div class="col-lg-6" data-aos="fade-right">
@@ -403,6 +420,19 @@ include 'connection.php';
         duration: 1000,
         once: true
     });
+</script>
+
+<script>
+    // Toggle .scrolled class on navbar to adjust background/shadow after scrolling
+    (function(){
+        const navbar = document.querySelector('.site-navbar');
+        if(!navbar) return;
+        const onScroll = () => {
+            if(window.scrollY > 20) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled');
+        };
+        document.addEventListener('scroll', onScroll, {passive:true});
+        onScroll();
+    })();
 </script>
 
 </body>
