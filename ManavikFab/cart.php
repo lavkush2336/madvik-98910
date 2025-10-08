@@ -40,6 +40,11 @@ $subtotal = array_sum(array_map(function($item) {
     return $item['price'] * $item['quantity'];
 }, $cart_items));
 
+// Calculate total savings across cart
+$total_savings = array_sum(array_map(function($item){
+    return ($item['original_price'] - $item['price']) * $item['quantity'];
+}, $cart_items));
+
 $shipping = $subtotal > 999 ? 0 : 200;
 $tax = $subtotal * 0.18; // 18% GST
 $total = $subtotal + $shipping + $tax;
@@ -62,9 +67,13 @@ $total = $subtotal + $shipping + $tax;
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        html, body {
+            height: 100%;
+        }
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f8c9d8 0%, #f4b6cc 100%);
+            /* Soft pink page background for empty areas */
+            background: linear-gradient(180deg, #fff0f6 0%, #fff8fb 100%);
         }
         .navbar-brand {
             font-size: 1.8rem;
@@ -74,22 +83,33 @@ $total = $subtotal + $shipping + $tax;
         .cart-container {
             background: white;
             border-radius: 1rem;
-            padding: 2rem;
+            padding: 1.25rem;
         }
         .cart-item {
-            border: 1px solid #e9ecef;
-            border-radius: 0.75rem;
-            padding: 1rem;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 12px;
+            padding: 0.9rem;
             margin-bottom: 1rem;
+            box-shadow: 0 8px 20px rgba(16,24,40,0.04);
+            display: flex;gap:1rem;align-items:center
         }
+        .cart-item .item-img{flex:0 0 110px}
+        .cart-item .item-img img{width:110px;height:110px;object-fit:cover;border-radius:8px}
+        .cart-item .item-meta{flex:1}
+        .cart-item .item-actions{display:flex;flex-direction:column;gap:.5rem;align-items:flex-end}
+        .cart-item .price-row{display:flex;gap:.5rem;align-items:center}
+        .cart-item .original-price{text-decoration:line-through;color:#9aa0a6;font-size:.9rem}
+        .cart-item .savings{color:#198754;font-weight:700}
+        .cart-item .action-icon{background:transparent;border:none;color:#6c757d;font-size:1.1rem}
         .btn-primary-custom {
-            background: linear-gradient(135deg, #f8c9d8 0%, #f4b6cc 100%);
+            background: linear-gradient(90deg,#ff6aa6,#ff4f87);
             border: none;
-            color: #2d2d2d;
-            font-weight: 600;
-            padding: 0.75rem 2rem;
-            border-radius: 2rem;
-            transition: all 0.3s ease;
+            color: #fff;
+            font-weight: 700;
+            padding: 0.95rem 2.25rem;
+            border-radius: 12px;
+            transition: all 0.22s ease;
+            box-shadow: 0 12px 30px rgba(255,79,135,0.12);
         }
         .btn-primary-custom:hover {
             transform: translateY(-2px);
@@ -98,6 +118,28 @@ $total = $subtotal + $shipping + $tax;
         .footer {
             background: #2d2d2d;
             color: white;
+        }
+        /* Ensure footer text and links are readable on dark background */
+        footer.footer p,
+        footer.footer li,
+        footer.footer .text-muted,
+        footer.footer a,
+        footer.footer ul li a,
+        footer.footer .text-white {
+            color: #CCCCCC !important;
+        }
+        footer.footer a:hover,
+        footer.footer ul li a:hover,
+        footer.footer .text-white:hover {
+            color: #FFFFFF !important;
+            text-decoration: none !important;
+        }
+        /* Target container descendants for maximum specificity */
+        footer.footer .container a,
+        footer.footer .container p,
+        footer.footer .container li,
+        footer.footer .container ul li a {
+            color: #CCCCCC !important;
         }
         .search-bar {
             border-radius: 2rem;
@@ -121,6 +163,67 @@ $total = $subtotal + $shipping + $tax;
             background: #f4b6cc;
             border-color: #f4b6cc;
             color: white;
+        }
+        /* Order summary emphasis */
+        .order-summary{background:linear-gradient(180deg,#fff,#fff);border-radius:12px;padding:1.25rem;border:1px solid rgba(0,0,0,0.04);box-shadow:0 10px 30px rgba(16,24,40,0.04)}
+        .order-summary .total-amount{font-size:1.6rem;font-weight:800;color:#c12b5a}
+        .btn-checkout{background:#ff3f7a;color:#fff;border:none;padding:1rem 1.5rem;border-radius:12px;font-weight:800;font-size:1rem;box-shadow:0 18px 40px rgba(255,63,122,0.12)}
+        .secure-checkout{display:flex;align-items:center;gap:.5rem;color:#6c757d;font-size:.9rem;margin-top:.6rem}
+        .secure-checkout i{color:#198754}
+
+        /* Recently viewed carousel */
+        .recent-carousel{display:flex;gap:1rem;overflow:auto;padding-bottom:.5rem}
+        .recent-card{min-width:220px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);overflow:hidden;background:#fff;box-shadow:0 10px 30px rgba(16,24,40,0.04)}
+        .recent-card .img-wrap{height:180px;overflow:hidden}
+        .recent-card img{width:100%;height:100%;object-fit:cover}
+        .recent-card .card-body{padding:.75rem}
+        .recent-card .add-cart{background:#ff6aa6;border:none;color:#fff;padding:.45rem .6rem;border-radius:8px}
+
+        /* Additional cart redesign styles (appended) */
+        .cart-item{
+            display:flex;
+            gap:16px;
+            align-items:flex-start;
+            padding:16px;
+            border-radius:12px;
+            box-shadow:0 6px 18px rgba(0,0,0,0.06);
+            background:#fff;
+            margin-bottom:14px;
+        }
+        .cart-item .item-img{
+            width:120px;
+            height:120px;
+            flex:0 0 120px;
+            overflow:hidden;
+            border-radius:8px;
+        }
+        .cart-item .item-img img{width:100%;height:100%;object-fit:cover;display:block}
+        .cart-item .item-meta{flex:1}
+        .cart-item .price-row{display:flex;gap:8px;align-items:center}
+        .original-price{color:#888;text-decoration:line-through;font-size:.9rem}
+        .savings{color:#1a9a48;font-weight:600;font-size:.95rem;margin-left:8px}
+        .item-actions{display:flex;flex-direction:column;align-items:flex-end;gap:8px;min-width:120px}
+        .quantity-btn{background:#f4f4f6;border:0;padding:6px 10px;border-radius:6px}
+        .action-icon{background:transparent;border:0;font-size:1.05rem;padding:6px}
+
+        .order-summary{background:linear-gradient(180deg,#fff 0,#fff 100%);padding:18px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.06)}
+        .order-summary .total-amount{font-size:1.5rem;color:#e83e8c;font-weight:800}
+        .btn-checkout{background:linear-gradient(90deg,#ff6fbf,#ff2d95);border:0;color:#fff;padding:12px 16px;border-radius:10px;font-weight:700}
+        .secure-checkout{display:flex;align-items:center;gap:8px;color:#6c757d;margin-top:8px}
+        .secure-checkout i{background:#f8f9fa;padding:6px;border-radius:6px;color:#ff2d95}
+
+        .recent-carousel{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px}
+        .recent-card{min-width:220px;background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06);overflow:hidden}
+        .recent-card .img-wrap{height:140px;overflow:hidden}
+        .recent-card .img-wrap img{width:100%;height:100%;object-fit:cover}
+        .recent-card .card-body{padding:10px}
+        .add-cart{background:#fff;border:1px solid #ff2d95;color:#ff2d95;padding:6px 10px;border-radius:8px}
+
+        /* small screens */
+        @media (max-width:767px){
+            .cart-item{flex-direction:column;gap:12px}
+            .item-actions{align-items:flex-start;min-width:auto}
+            .cart-item .item-img{width:100%;height:220px;flex:0 0 auto}
         }
     </style>
 </head>
@@ -226,32 +329,32 @@ $total = $subtotal + $shipping + $tax;
                     <?php else: ?>
                         <?php foreach($cart_items as $item): ?>
                         <div class="cart-item">
-                            <div class="row align-items-center">
-                                <div class="col-md-2">
-                                    <img src="<?php echo $item['image']; ?>" class="img-fluid rounded" alt="<?php echo $item['name']; ?>">
+                            <div class="item-img">
+                                <img src="<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>">
+                            </div>
+                            <div class="item-meta">
+                                <h6 class="mb-1"><?php echo $item['name']; ?></h6>
+                                <small class="text-muted d-block mb-2">Size: <?php echo $item['size']; ?> | Color: <?php echo $item['color']; ?></small>
+                                <div class="price-row">
+                                    <span class="fw-bold text-danger">₹<?php echo number_format($item['price']); ?></span>
+                                    <span class="original-price">₹<?php echo number_format($item['original_price']); ?></span>
+                                    <span class="savings">You save ₹<?php echo number_format(($item['original_price'] - $item['price']) * $item['quantity']); ?></span>
                                 </div>
-                                <div class="col-md-4">
-                                    <h6 class="mb-1"><?php echo $item['name']; ?></h6>
-                                    <small class="text-muted">Size: <?php echo $item['size']; ?> | Color: <?php echo $item['color']; ?></small>
-                                </div>
-                                <div class="col-md-2">
+                            </div>
+                            <div class="item-actions">
+                                <div>
                                     <div class="d-flex align-items-center">
                                         <button class="quantity-btn" onclick="updateQuantity(<?php echo $item['id']; ?>, -1)">-</button>
                                         <span class="mx-3" id="quantity-<?php echo $item['id']; ?>"><?php echo $item['quantity']; ?></span>
                                         <button class="quantity-btn" onclick="updateQuantity(<?php echo $item['id']; ?>, 1)">+</button>
                                     </div>
                                 </div>
-                                <div class="col-md-2 text-center">
-                                    <span class="fw-bold text-danger">₹<?php echo number_format($item['price']); ?></span>
-                                    <small class="text-muted text-decoration-line-through d-block">₹<?php echo number_format($item['original_price']); ?></small>
-                                </div>
-                                <div class="col-md-2 text-end">
+                                <div class="mt-2 text-end">
                                     <span class="fw-bold">₹<?php echo number_format($item['price'] * $item['quantity']); ?></span>
                                 </div>
-                                <div class="col-md-1 text-end">
-                                    <button class="btn btn-sm btn-outline-danger" onclick="removeItem(<?php echo $item['id']; ?>)">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
+                                <div class="mt-3">
+                                    <button class="action-icon" title="Move to wishlist" onclick="moveToWishlist(<?php echo $item['id']; ?>)"><i class="bi bi-heart"></i></button>
+                                    <button class="action-icon text-danger" title="Remove" onclick="removeItem(<?php echo $item['id']; ?>)"><i class="bi bi-trash"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -272,29 +375,32 @@ $total = $subtotal + $shipping + $tax;
 
             <!-- Order Summary -->
             <div class="col-lg-4">
-                <div class="cart-container">
-                    <h4 class="mb-4">Order Summary</h4>
-                    
+                <div class="order-summary">
+                    <h4 class="mb-3">Order Summary</h4>
                     <div class="d-flex justify-content-between mb-2">
                         <span>Subtotal:</span>
                         <span>₹<?php echo number_format($subtotal); ?></span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <span>Shipping:</span>
-                        <span><?php echo $shipping == 0 ? 'Free' : '₹' . number_format($shipping); ?></span>
+                        <span><?php echo $shipping == 0 ? '<span class="text-success">Free</span>' : '₹' . number_format($shipping); ?></span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <span>Tax (GST):</span>
                         <span>₹<?php echo number_format($tax); ?></span>
                     </div>
-                    
-                    <hr>
-                    
-                    <div class="d-flex justify-content-between mb-4">
-                        <strong>Total:</strong>
-                        <strong class="text-danger">₹<?php echo number_format($total); ?></strong>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Estimated Savings:</span>
+                        <span class="text-success">₹<?php echo number_format($total_savings); ?></span>
                     </div>
-                    
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <strong>Total:</strong>
+                        <div class="text-end">
+                            <div class="total-amount">₹<?php echo number_format($total); ?></div>
+                            <div class="text-muted" style="font-size:.9rem">Inclusive of taxes</div>
+                        </div>
+                    </div>
                     <?php if($shipping > 0): ?>
                         <div class="alert alert-info">
                             <small>Add ₹<?php echo 999 - $subtotal; ?> more to get free shipping!</small>
@@ -304,14 +410,10 @@ $total = $subtotal + $shipping + $tax;
                             <small><i class="bi bi-check-circle me-1"></i>Free shipping applied!</small>
                         </div>
                     <?php endif; ?>
-                    
-                    <button class="btn btn-primary-custom w-100 mb-3" onclick="proceedToCheckout()">
-                        <i class="bi bi-credit-card me-2"></i>Proceed to Checkout
+                    <button class="btn-checkout w-100 mb-2" onclick="proceedToCheckout()">
+                        <i class="bi bi-lock-fill me-2"></i>Proceed to Secure Checkout
                     </button>
-                    
-                    <div class="text-center">
-                        <small class="text-muted">Secure checkout with multiple payment options</small>
-                    </div>
+                    <div class="secure-checkout"><i class="bi bi-shield-lock-fill"></i><span>Secure checkout — 256-bit SSL encryption</span></div>
                 </div>
 
                 <!-- Coupon Code -->
@@ -351,8 +453,8 @@ $total = $subtotal + $shipping + $tax;
         <!-- Recently Viewed -->
         <div class="row mt-5">
             <div class="col-12">
-                <h4 class="mb-4">Recently Viewed</h4>
-                <div class="row g-4">
+                <h4 class="mb-4">You Might Also Like</h4>
+                <div class="recent-carousel">
                     <?php
                     $recent_products = [
                         [
@@ -374,23 +476,21 @@ $total = $subtotal + $shipping + $tax;
                             'image' => 'images/product6.jpg'
                         ]
                     ];
-                    
+
                     foreach($recent_products as $product):
                     ?>
-                    <div class="col-md-4">
-                        <div class="card h-100">
-                            <img src="<?php echo $product['image']; ?>" class="card-img-top" alt="<?php echo $product['name']; ?>">
-                            <div class="card-body">
-                                <h6 class="card-title"><?php echo $product['name']; ?></h6>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div>
-                                        <span class="fw-bold text-danger">₹<?php echo number_format($product['price']); ?></span>
-                                        <small class="text-muted text-decoration-line-through">₹<?php echo number_format($product['original_price']); ?></small>
-                                    </div>
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-cart-plus"></i>
-                                    </button>
+                    <div class="recent-card">
+                        <div class="img-wrap">
+                            <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>">
+                        </div>
+                        <div class="card-body">
+                            <h6 class="mb-1"><?php echo $product['name']; ?></h6>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <span class="fw-bold text-danger">₹<?php echo number_format($product['price']); ?></span>
+                                    <small class="text-muted text-decoration-line-through ms-2">₹<?php echo number_format($product['original_price']); ?></small>
                                 </div>
+                                <button class="add-cart" onclick="addToCart('<?php echo $product['name']; ?>')">Add</button>
                             </div>
                         </div>
                     </div>
