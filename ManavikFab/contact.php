@@ -65,6 +65,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background: #2d2d2d;
             color: white;
         }
+        /* Ensure footer links, paragraphs, and list items are readable on dark background */
+        footer.footer p,
+        footer.footer li,
+        footer.footer a,
+        footer.footer .text-muted,
+        footer.footer ul li a,
+        footer.footer .text-white {
+            color: #CCCCCC !important;
+        }
+        footer.footer a:hover,
+        footer.footer ul li a:hover,
+        footer.footer .text-white:hover {
+            color: #FFFFFF !important;
+            text-decoration: none !important;
+        }
+        /* Target the container descendants for maximum specificity */
+        footer.footer .container a,
+        footer.footer .container p,
+        footer.footer .container li,
+        footer.footer .container ul li a {
+            color: #CCCCCC !important;
+        }
         .search-bar {
             border-radius: 2rem;
             border: 2px solid #f8c9d8;
