@@ -198,7 +198,7 @@
                     <a href="#" class="text-decoration-none" style="color:#7a6a78;font-size:0.9rem">Forgot?</a>
                 </div>
                 <button type="submit" name="login" class="btn-login w-100">Sign in</button>
-                <div class="form-note">New to ManavikFab? <a href="#" style="color:var(--pink-200);text-decoration:none;font-weight:600">Create an account</a></div>
+                <!-- <div class="form-note">New to ManavikFab? <a href="#" style="color:var(--pink-200);text-decoration:none;font-weight:600">Create an account</a></div> -->
             </form>
             <?PHP
                 if(isset($_POST['login']))
