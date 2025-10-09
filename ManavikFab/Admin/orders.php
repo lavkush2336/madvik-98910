@@ -100,34 +100,37 @@ $payment_statuses = ['All', 'Pending', 'Paid', 'Failed', 'Refunded'];
     }
 
     /* Sidebar */
-    .sidebar {
-        background: linear-gradient(135deg, #f8c9d8 0%, #f4b6cc 100%);
-        min-height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 240px;
-        z-index: 1000;
-        overflow-y: auto;
-    }
-    .sidebar .nav-link {
-        color: #2d2d2d;
-        padding: 0.65rem 0.9rem;
-        border-radius: 0.5rem;
-        margin: 0.3rem 0;
-        transition: all 0.25s ease;
-        display:inline-flex;align-items:center
-    }
-    .sidebar .nav-link:hover,
-    .sidebar .nav-link.active {
-        background-color: rgba(255, 255, 255, 0.16);
-        color: #2d2d2d;
-        transform: translateY(-1px);
-        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
-    }
-
+      .sidebar {
+            background: linear-gradient(135deg, #f8c9d8 0%, #f4b6cc 100%);
+            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 240px;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .sidebar .nav-link {
+            color: #2d2d2d;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            margin: 0.25rem 0;
+            transition: all 0.3s ease;
+            display: block;
+            align-items: center;
+        }
+        .sidebar .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #2d2d2d;
+            box-shadow: none;
+            width: 100%;
+        }
+        .sidebar .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #2d2d2d;
+        }
     /* Spacing utility used on Index page */
-    .section-spacer{ margin-top: 1.75rem; }
+    .section-spacer{ margin-top: 0.5rem; }
 
     /* Main content area: prevent overflow and set readable base font */
     .main-content {
@@ -183,6 +186,9 @@ $payment_statuses = ['All', 'Pending', 'Paid', 'Failed', 'Refunded'];
         .main-content { margin-left: 0; max-width: 100%; padding-left: 1rem; padding-right: 1rem }
         .navbar .container-fluid h4.mb-0{ font-size:1.25rem }
     }
+    /* Reusable admin dropdown item style: bold, clear typography with icon alignment */
+    .admin-dropdown-item{ font-weight:700; font-size:0.95rem; color:#212529; display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem }
+    .dropdown-menu .admin-dropdown-item i{ width:20px; display:inline-flex; align-items:center; justify-content:center; font-size:1rem }
 </style>
 
 </head>
@@ -233,25 +239,27 @@ $payment_statuses = ['All', 'Pending', 'Paid', 'Failed', 'Refunded'];
         
         <!-- Main Content -->
         <div class="col-md-9 col-lg-10 main-content p-4">
-            <!-- Top Navigation -->
-            <nav class="navbar navbar-expand-lg">
-                <div class="container-fluid">
-                    <h4 class="mb-0">Orders Management</h4>
-                    <div class="d-flex align-items-center">
-                        <div class="dropdown">
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-circle me-2"></i>Admin
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-                                <li><a class="dropdown-item" href="settings.php">Settings</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                            </ul>
-                        </div>
-                    </div>
+            <!-- Orders Management Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4 stats-card" style="padding: 1.25rem;">
+                <div>
+                    <h2 class="mb-1">
+                        <i class="bi bi-cart-check text-primary me-2"></i>
+                        Orders Management
+                    </h2>
+                    <p class="text-muted mb-0">Manage orders, track status, and process payments</p>
                 </div>
-            </nav>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-2"></i>Admin
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
                 
                 <!-- Stats Cards -->
                 <div class="row g-4 mb-4 section-spacer">

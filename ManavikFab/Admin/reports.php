@@ -69,8 +69,9 @@ $customer_metrics = [
     
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f8f9fa;
             font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
         }
         
         .admin-sidebar {
@@ -88,10 +89,10 @@ $customer_metrics = [
         
         .admin-content {
             margin-left: 240px;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            max-width: calc(100vw - 240px);
+            background-color: #f8f9fa;
+            font-size: 0.96rem;
+            overflow-x: hidden;
         }
         
         .sidebar-link {
@@ -118,42 +119,44 @@ $customer_metrics = [
         
         .report-card {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: none;
         }
-        
         .report-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 36px rgba(15,23,42,0.08);
         }
         
         .metric-card {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease;
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: none;
         }
-        
         .metric-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 36px rgba(15,23,42,0.08);
         }
         
         .btn-custom {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
             border: none;
-            color: white;
             border-radius: 10px;
             padding: 10px 20px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(102,126,234,0.08);
             transition: all 0.3s ease;
         }
-        
         .btn-custom:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.18);
+            color: #fff;
         }
         
         .chart-container {
@@ -167,9 +170,10 @@ $customer_metrics = [
         
         .filter-card {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+            border: none;
         }
     </style>
 </head>
@@ -215,35 +219,35 @@ $customer_metrics = [
             
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 admin-content p-4">
-                    <!-- Header -->
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div>
-                            <h2 class="mb-1">
-                                <i class="bi bi-graph-up text-primary me-2"></i>
-                                Reports & Analytics
-                            </h2>
-                            <p class="text-muted mb-0">Comprehensive business insights and performance metrics</p>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-custom">
-                                <i class="bi bi-download me-2"></i>Export Report
+                <!-- PageHeader Card -->
+                <div class="page-header-card d-flex justify-content-between align-items-center mb-4" style="background: #fff; border-radius: 1rem; box-shadow: 0 6px 18px rgba(15,23,42,0.06); padding: 1.25rem;">
+                    <div>
+                        <h2 class="mb-1">
+                            <i class="bi bi-graph-up text-primary me-2"></i>
+                            Reports & Analytics
+                        </h2>
+                        <p class="text-muted mb-0">Comprehensive business insights and performance metrics</p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-custom">
+                            <i class="bi bi-download me-2"></i>Export Report
+                        </button>
+                        <button class="btn btn-outline-secondary">
+                            <i class="bi bi-calendar me-2"></i>Date Range
+                        </button>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-2"></i>Admin
                             </button>
-                            <button class="btn btn-outline-secondary">
-                                <i class="bi bi-calendar me-2"></i>Date Range
-                            </button>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                    <i class="bi bi-person-circle me-2"></i>Admin
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="../logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
-                                </ul>
-                            </div>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="../logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                            </ul>
                         </div>
                     </div>
+                </div>
                     
                     <!-- Key Metrics -->
                     <div class="row mb-4">

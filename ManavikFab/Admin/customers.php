@@ -115,6 +115,7 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
         }
         
         .admin-sidebar {
@@ -132,12 +133,12 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
         }
         
         .admin-content {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             /* align with sidebar width (same approach as orders.php) */
             margin-left: 240px;
+            max-width: calc(100vw - 240px);
+            background-color: #f8f9fa;
+            font-size: 0.96rem;
+            overflow-x: hidden;
         }
         
         .sidebar-link {
@@ -164,15 +165,16 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
         
         .customer-card {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: none;
         }
         
         .customer-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 36px rgba(15,23,42,0.08);
         }
         
         .status-badge {
@@ -187,36 +189,41 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
         
         .filter-card {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+            border: none;
         }
         
         .btn-custom {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
             border: none;
-            color: white;
             border-radius: 10px;
             padding: 10px 20px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(102,126,234,0.08);
             transition: all 0.3s ease;
         }
         
         .btn-custom:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.18);
+            color: #fff;
         }
         
         .stats-card {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease;
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: none;
         }
         
         .stats-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 36px rgba(15,23,42,0.08);
         }
         /* Reusable admin dropdown item style: bold, clear typography with icon alignment */
         .admin-dropdown-item{
@@ -240,10 +247,13 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
         }
         
         .table-custom th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: #f1f5f9;
+            color: #0f172a;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(15,23,42,0.06);
             border: none;
-            padding: 15px;
+            padding: .75rem .9rem;
+            vertical-align: middle;
         }
         
         .table-custom td {
@@ -311,7 +321,7 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 admin-content p-4">
                     <!-- Header -->
-                    <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4 stats-card" style="padding: 1.25rem;">
                         <div>
                             <h2 class="mb-1">
                                 <i class="bi bi-people text-primary me-2"></i>

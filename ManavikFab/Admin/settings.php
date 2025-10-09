@@ -67,8 +67,9 @@ $shipping_settings = [
     
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f8f9fa;
             font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
         }
         
         .admin-sidebar {
@@ -86,14 +87,12 @@ $shipping_settings = [
         
         .admin-content {
             margin-left: 240px;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            /* ensure the main content stretches the full viewport height
-               and reduce bottom padding so tables/content sit closer to page bottom */
+            max-width: calc(100vw - 240px);
+            background-color: #f8f9fa;
+            font-size: 0.96rem;
             min-height: 100vh;
             padding-bottom: 1rem;
+            overflow-x: hidden;
         }
         
         .sidebar-link {
@@ -120,47 +119,59 @@ $shipping_settings = [
         
         .settings-card {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: none;
         }
-        
         .settings-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 36px rgba(15,23,42,0.08);
         }
         
         .btn-custom {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
             border: none;
-            color: white;
             border-radius: 10px;
             padding: 10px 20px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(102,126,234,0.08);
             transition: all 0.3s ease;
         }
-        
         .btn-custom:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.18);
+            color: #fff;
         }
         
         .nav-pills .nav-link {
             color: #6c757d;
             border-radius: 10px;
             margin-bottom: 5px;
+            font-weight: 500;
             transition: all 0.3s ease;
         }
-        
         .nav-pills .nav-link.active {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(102,126,234,0.08);
         }
         
+        .form-control, .form-select {
+            border-radius: 8px;
+            font-size: 1rem;
+            border: 1px solid #e5e7eb;
+            background: #fff;
+            color: #222;
+            box-shadow: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
         .form-control:focus, .form-select:focus {
             border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
         }
         
         .switch {
@@ -251,27 +262,27 @@ $shipping_settings = [
             
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 admin-content p-4">
-                    <!-- Header -->
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div>
-                            <h2 class="mb-1">
-                                <i class="bi bi-gear text-primary me-2"></i>
-                                Settings
-                            </h2>
-                            <p class="text-muted mb-0">Manage website configuration and system preferences</p>
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-circle me-2"></i>Admin
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="../logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
-                            </ul>
-                        </div>
+                <!-- PageHeader Card -->
+                <div class="page-header-card d-flex justify-content-between align-items-center mb-4" style="background: #fff; border-radius: 1rem; box-shadow: 0 6px 18px rgba(15,23,42,0.06); padding: 1.25rem;">
+                    <div>
+                        <h2 class="mb-1">
+                            <i class="bi bi-gear text-primary me-2"></i>
+                            Settings
+                        </h2>
+                        <p class="text-muted mb-0">Manage website configuration and system preferences</p>
                     </div>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle me-2"></i>Admin
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="../logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
                     
                     <!-- Settings Navigation -->
                     <div class="row">

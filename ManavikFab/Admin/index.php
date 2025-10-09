@@ -112,19 +112,22 @@ $top_products = [
         }
         .sidebar .nav-link {
             color: #2d2d2d;
-            padding: 0.65rem 0.9rem;
+            padding: 0.75rem 1rem;
             border-radius: 0.5rem;
-            margin: 0.3rem 0;
-            transition: all 0.25s ease;
-            display: inline-flex;
+            margin: 0.25rem 0;
+            transition: all 0.3s ease;
+            display: block;
             align-items: center;
         }
-        .sidebar .nav-link:hover,
         .sidebar .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.16);
+            background-color: rgba(255, 255, 255, 0.2);
             color: #2d2d2d;
-            transform: translateY(-1px);
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+            box-shadow: none;
+            width: 100%;
+        }
+        .sidebar .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #2d2d2d;
         }
 
         /* Stats cards */
@@ -176,8 +179,8 @@ $top_products = [
         }
 
         /* Reusable admin dropdown item style: bold, clear typography with icon alignment */
-        .admin-dropdown-item{ font-weight:700; font-size:0.95rem; color:#212529; display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem }
-        .dropdown-menu .admin-dropdown-item i{ width:20px; display:inline-flex; align-items:center; justify-content:center; font-size:1rem }
+    .admin-dropdown-item{ font-weight:700; font-size:0.95rem; color:#212529; display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem }
+    .dropdown-menu .admin-dropdown-item i{ width:20px; display:inline-flex; align-items:center; justify-content:center; font-size:1rem }
     </style>
 </head>
 <body>
@@ -216,7 +219,7 @@ $top_products = [
                             <i class="bi bi-graph-up me-2"></i>Reports
                         </a>
                         <a class="nav-link" href="settings.php">
-                            <i class="bi bi-gear me-2"></i>Settings
+                            <i class="bi bi-gear me-2"></i>Settings                 
                         </a>
                         <hr>
                         <a class="nav-link" href="logout.php">
