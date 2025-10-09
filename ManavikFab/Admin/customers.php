@@ -218,6 +218,19 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
         .stats-card:hover {
             transform: translateY(-3px);
         }
+        /* Reusable admin dropdown item style: bold, clear typography with icon alignment */
+        .admin-dropdown-item{
+            font-weight:700;
+            font-size:0.95rem;
+            color: #212529;
+            display:flex;
+            align-items:center;
+            gap:0.5rem;
+            padding:0.45rem 0.9rem;
+        }
+        .dropdown-menu .admin-dropdown-item i{
+            width:20px;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;
+        }
         
         .table-custom {
             background: white;

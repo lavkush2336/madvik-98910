@@ -87,10 +87,19 @@ $payment_statuses = ['All', 'Pending', 'Paid', 'Failed', 'Refunded'];
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
+    /* Reset and layout fixes */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { overflow-x: hidden; }
+
     body {
         font-family: 'Poppins', sans-serif;
         background-color: #f8f9fa;
+        -webkit-font-smoothing:antialiased;
+        -moz-osx-font-smoothing:grayscale;
+        color: #0f172a;
     }
+
+    /* Sidebar */
     .sidebar {
         background: linear-gradient(135deg, #f8c9d8 0%, #f4b6cc 100%);
         min-height: 100vh;
@@ -103,46 +112,53 @@ $payment_statuses = ['All', 'Pending', 'Paid', 'Failed', 'Refunded'];
     }
     .sidebar .nav-link {
         color: #2d2d2d;
-        padding: 0.75rem 1rem;
+        padding: 0.65rem 0.9rem;
         border-radius: 0.5rem;
-        margin: 0.25rem 0;
-        transition: all 0.3s ease;
+        margin: 0.3rem 0;
+        transition: all 0.25s ease;
+        display:inline-flex;align-items:center
     }
     .sidebar .nav-link:hover,
     .sidebar .nav-link.active {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0.16);
         color: #2d2d2d;
+        transform: translateY(-1px);
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
     }
-    .stats-card {
-        background: white;
-        border-radius: 1rem;
-        padding: 1.5rem;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease;
-    }
-    .stats-card:hover {
-        transform: translateY(-5px);
-    }
+
+    /* Spacing utility used on Index page */
+    .section-spacer{ margin-top: 1.75rem; }
+
+    /* Main content area: prevent overflow and set readable base font */
     .main-content {
         margin-left: 240px;
+        max-width: calc(100% - 240px);
         background-color: #f8f9fa;
+        font-size: 0.96rem;
     }
-    .navbar {
-        background: white;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    .table-container {
-        background: white;
-        border-radius: 1rem;
-        padding: 1.5rem;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    .status-badge {
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
+
+    /* Navbar and title prominence */
+    .navbar { background: white; box-shadow: 0 6px 18px rgba(15,23,42,0.06); padding:.6rem 1rem }
+    .navbar .container-fluid h4.mb-0{ font-size:1.5rem; font-weight:800; letter-spacing:-0.2px; margin:0 }
+
+    /* Stats cards */
+    .stats-card { background: white; border-radius: 1rem; padding:1.25rem; box-shadow: 0 6px 18px rgba(15,23,42,0.06); transition: transform .25s ease, box-shadow .25s ease }
+    .stats-card:hover { transform: translateY(-5px); box-shadow: 0 12px 36px rgba(15,23,42,0.08); }
+
+    /* Table / card containers */
+    .table-container { background: white; border-radius: 1rem; padding:1.25rem; box-shadow: 0 6px 18px rgba(15,23,42,0.04); }
+
+    /* Section headings */
+    .table-container h5, .stats-card h5, .main-content h5 { font-size:1.05rem; font-weight:700; color:#0f172a; margin-bottom:.75rem }
+
+    /* Tables: ensure they fit and look modern */
+    .table-responsive { overflow-x:auto; }
+    table { width:100%; font-size:.95rem; border-collapse:collapse; }
+    thead.table-dark th { background: #f1f5f9 !important; color:#0f172a !important; font-weight:700; border-bottom:1px solid rgba(15,23,42,0.06) }
+    .table tbody tr td, .table thead th { padding:.75rem .9rem; vertical-align:middle }
+
+    /* Status badges: consistent sizing and alignment */
+    .status-badge{ padding:6px 12px; border-radius:12px; font-size:.85rem; font-weight:700; display:inline-block }
     .status-pending { background: #fff3cd; color: #856404; }
     .status-processing { background: #cce5ff; color: #004085; }
     .status-transit { background: #d1ecf1; color: #0c5460; }
@@ -152,34 +168,20 @@ $payment_statuses = ['All', 'Pending', 'Paid', 'Failed', 'Refunded'];
     .payment-pending { background: #fff3cd; color: #856404; }
     .payment-failed { background: #f8d7da; color: #721c24; }
     .payment-refunded { background: #e2e3e5; color: #383d41; }
-    
-    /* Ensure consistent branding styling */
-    .sidebar h4 {
-        font-size: 1.5rem;
-        font-weight: 700 !important;
-        color: #2d2d2d !important;
-        margin-bottom: 0.5rem;
-    }
-    .sidebar h4.fw-bold {
-        font-weight: 700 !important;
-    }
-    .sidebar small {
-        font-size: 0.875rem;
-        color: #6c757d;
-    }
-    .sidebar .text-danger {
-        color: #dc3545 !important;
-    }
-    .sidebar .text-dark {
-        color: #2d2d2d !important;
-    }
-    /* Force bold styling for ManavikFab text */
-    .sidebar .fw-bold {
-        font-weight: 700 !important;
-    }
-    .sidebar h4.fw-bold {
-        font-weight: 700 !important;
-        font-family: 'Poppins', sans-serif !important;
+
+    /* Action buttons styling within table */
+    .btn-group .btn { border-radius:.5rem; padding:.4rem .6rem; min-width:36px }
+    .btn-group .btn i { font-size:1rem }
+    .btn-sm { font-size:.85rem }
+
+    /* Reduce large element padding to avoid overflow */
+    .table-container .row > [class*="col-"] { padding-left:.5rem; padding-right:.5rem }
+
+    /* Responsive: stack sidebar and content on small screens to avoid horizontal scroll */
+    @media (max-width: 991px){
+        .sidebar { position: relative; width: 100%; height: auto }
+        .main-content { margin-left: 0; max-width: 100%; padding-left: 1rem; padding-right: 1rem }
+        .navbar .container-fluid h4.mb-0{ font-size:1.25rem }
     }
 </style>
 
@@ -252,7 +254,7 @@ $payment_statuses = ['All', 'Pending', 'Paid', 'Failed', 'Refunded'];
             </nav>
                 
                 <!-- Stats Cards -->
-                <div class="row g-4 mb-4">
+                <div class="row g-4 mb-4 section-spacer">
                     <div class="col-md-3">
                         <div class="stats-card">
                             <div class="d-flex align-items-center">

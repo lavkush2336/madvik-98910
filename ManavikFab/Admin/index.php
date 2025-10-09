@@ -87,10 +87,19 @@ $top_products = [
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
+        /* Reset & layout fixes */
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { overflow-x: hidden; }
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f8f9fa;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            color: #0f172a;
         }
+
+        /* Sidebar */
         .sidebar {
             background: linear-gradient(135deg, #f8c9d8 0%, #f4b6cc 100%);
             min-height: 100vh;
@@ -103,40 +112,72 @@ $top_products = [
         }
         .sidebar .nav-link {
             color: #2d2d2d;
-            padding: 0.75rem 1rem;
+            padding: 0.65rem 0.9rem;
             border-radius: 0.5rem;
-            margin: 0.25rem 0;
-            transition: all 0.3s ease;
+            margin: 0.3rem 0;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
         }
         .sidebar .nav-link:hover,
         .sidebar .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.16);
             color: #2d2d2d;
+            transform: translateY(-1px);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
         }
+
+        /* Stats cards */
         .stats-card {
             background: white;
             border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            padding: 1.25rem;
+            box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
-        .stats-card:hover {
-            transform: translateY(-5px);
-        }
+        .stats-card:hover { transform: translateY(-5px); box-shadow: 0 12px 36px rgba(15,23,42,0.08); }
+
+        /* Main content area - ensure no horizontal overflow */
         .main-content {
             margin-left: 240px;
+            max-width: calc(100% - 240px);
             background-color: #f8f9fa;
+            font-size: 0.96rem;
         }
-        .navbar {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+
+        /* Navbar & main title */
+        .navbar { background: white; box-shadow: 0 6px 18px rgba(15,23,42,0.06); padding:.6rem 1rem }
+        .navbar .container-fluid h4.mb-0{ font-size:1.5rem; font-weight:800; letter-spacing:-0.2px; margin:0; color:#0f172a }
+
+        /* Table/card containers */
+        .table-container { background: white; border-radius: 1rem; padding: 1.25rem; box-shadow: 0 6px 18px rgba(15,23,42,0.04); }
+
+        /* Section headings - stronger hierarchy */
+        .table-container h5,
+        .stats-card h5,
+        .table-container .h5,
+        .main-content h5 { font-size:1.05rem; font-weight:700; color:#0f172a; margin-bottom:.75rem }
+
+        /* Tables: readable and consistent */
+        table { font-size:.95rem }
+        thead.table-dark th { font-weight:700; font-size:.98rem }
+        .table tbody tr td, .table thead th { padding:.75rem .9rem; vertical-align:middle }
+        .table-responsive { overflow-x:auto }
+
+        /* Spacing between major sections */
+        .p-4 > .row.g-4 { margin-bottom: 1.75rem }
+        .row.g-4.mt-4 { margin-top: 1.5rem }
+
+        /* Responsive adjustments to avoid horizontal scroll on small screens */
+        @media (max-width: 991px){
+            .sidebar { position: relative; width: 100%; height: auto }
+            .main-content { margin-left: 0; max-width: 100%; padding-left: 1rem; padding-right: 1rem }
+            .navbar .container-fluid h4.mb-0{ font-size:1.25rem }
         }
-        .table-container {
-            background: white;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+
+        /* Reusable admin dropdown item style: bold, clear typography with icon alignment */
+        .admin-dropdown-item{ font-weight:700; font-size:0.95rem; color:#212529; display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem }
+        .dropdown-menu .admin-dropdown-item i{ width:20px; display:inline-flex; align-items:center; justify-content:center; font-size:1rem }
     </style>
 </head>
 <body>
@@ -197,10 +238,10 @@ $top_products = [
                                     <i class="bi bi-person-circle me-2"></i>Admin
         </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-                                    <li><a class="dropdown-item" href="settings.php">Settings</a></li>
+                                    <li><a class="dropdown-item admin-dropdown-item" href="profile.php"><i class="bi bi-person me-0"></i>Profile</a></li>
+                                    <li><a class="dropdown-item admin-dropdown-item" href="settings.php"><i class="bi bi-gear me-0"></i>Settings</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                                    <li><a class="dropdown-item admin-dropdown-item" href="logout.php"><i class="bi bi-box-arrow-right me-0"></i>Logout</a></li>
                                 </ul>
                             </div>
                         </div>
