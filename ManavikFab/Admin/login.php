@@ -1,7 +1,12 @@
-<?PHP
+<?php
     session_start();
     include '../connection.php';
-    //$pass='Sikandar@int11';
+
+    // Check for the "Remember Me" cookie at the top of the page
+    $remembered_email = "";
+    if (isset($_COOKIE['remember_email'])) {
+        $remembered_email = $_COOKIE['remember_email'];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,9 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ManavikFab Admin Login</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Tailwind CSS (kept for utility classes) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root{
@@ -38,6 +41,7 @@
             width:100%;
             max-width:1000px;
             height:calc(100vh - 4rem);
+            min-height: 550px;
             border-radius:var(--panel-radius);
             overflow:hidden;
             display:flex;
@@ -55,25 +59,6 @@
             justify-content:center;
             color:rgba(255,255,255,0.95);
             padding:2.5rem;
-        }
-
-        /* Decorative shapes for a dynamic look */
-        .login-illustration::before{
-            content:"";
-            position:absolute;
-            width:260px;height:260px;
-            background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.12), transparent 40%);
-            border-radius:50%;
-            top:20px;left:40px;
-            transform:rotate(10deg);
-        }
-        .login-illustration::after{
-            content:"";
-            position:absolute;
-            right:-80px;bottom:-60px;
-            width:420px;height:420px;
-            background: radial-gradient(circle at 70% 70%, rgba(255,255,255,0.06), transparent 30%);
-            border-radius:50%;
         }
 
         .illustration-inner{
@@ -148,13 +133,29 @@
         }
         .btn-login:hover{transform:translateY(-2px); box-shadow:0 18px 36px rgba(234,174,190,0.22)}
 
-        .form-note{font-size:0.9rem;color:#6b5a66;margin-top:0.75rem}
-
-        /* Responsive: stack columns */
+        /* MODIFIED: Responsive behavior */
         @media (max-width: 900px){
-            .login-wrapper{flex-direction:column;height:auto}
-            .login-illustration{order:2;padding:1.5rem}
-            .login-panel{order:1;padding:1.5rem}
+            body {
+                padding: 0;
+                /* Allow body to scroll if content is tall */
+                height: auto;
+                min-height: 100%;
+            }
+            .login-wrapper {
+                flex-direction: column; /* Stack columns vertically */
+                height: auto;
+                width: 100%;
+                max-width: 100%;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            .login-illustration {
+                padding: 2rem 1rem;
+                /* Let the illustration take its natural height */
+            }
+            .login-panel {
+                padding: 2.5rem 1.5rem;
+            }
         }
     </style>
 </head>
@@ -162,14 +163,7 @@
     <div class="login-wrapper" role="main">
         <div class="login-illustration" aria-hidden="true">
             <div class="illustration-inner">
-                <!-- Decorative SVG could be added here; keeping it simple and CSS-driven -->
-                <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <rect x="0" y="0" width="160" height="160" rx="20" fill="rgba(255,255,255,0.06)"/>
-                    <g transform="translate(16,20)">
-                        <path d="M56 12c-9 0-16 7-16 16s7 16 16 16 16-7 16-16S65 12 56 12z" fill="#5b2b4a"/>
-                        <path d="M10 90c12-20 40-40 72-30" stroke="#7a4361" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.12"/>
-                    </g>
-                </svg>
+                <img src="..\images\image1.png">
                 <h3 class="illustration-title">Welcome to ManavikFab</h3>
                 <div class="illustration-sub">Premium fashion, curated for you.</div>
             </div>
@@ -181,10 +175,10 @@
                 <div class="brand-sub">Sign in to manage products, orders & customers</div>
             </div>
 
-            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="login-form">
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" class="login-form">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="you@domain.com" required>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="you@domain.com" value="<?php echo htmlspecialchars($remembered_email); ?>" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
@@ -192,87 +186,50 @@
                 </div>
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="remember">
+                        <input class="form-check-input" type="checkbox" id="remember" name="remember" <?php echo !empty($remembered_email) ? 'checked' : ''; ?>>
                         <label class="form-check-label" for="remember">Remember me</label>
                     </div>
-                    <a href="#" class="text-decoration-none" style="color:#7a6a78;font-size:0.9rem">Forgot?</a>
+                    <!-- <a href="#" class="text-decoration-none" style="color:#7a6a78;font-size:0.9rem">Forgot?</a> -->
                 </div>
                 <button type="submit" name="login" class="btn-login w-100">Sign in</button>
-                <!-- <div class="form-note">New to ManavikFab? <a href="#" style="color:var(--pink-200);text-decoration:none;font-weight:600">Create an account</a></div> -->
             </form>
-            <?PHP
-                if(isset($_POST['login']))
-                {
-                    $email=$_POST['email'];
-                    $pass=$_POST['pass'];
-                    $sql="SELECT * FROM `Admin` WHERE `Email`='$email'";
-                    $result=mysqli_query($con,$sql);
-                    $rows=mysqli_num_rows($result);
-                    if($rows>0)
-                    {
-                        while($row=mysqli_fetch_assoc($result))
-                        {
-                            $hpass=$row['Password'];
-                            $id=$row['AdminID'];
-                        }
-                        if(password_verify($pass, $hpass))
-                        {
-                            $_SESSION['adminid']=$id;
+            <?php
+                if (isset($_POST['login'])) {
+                    $email = $_POST['email'];
+                    $pass = $_POST['pass'];
+
+                    $stmt = mysqli_prepare($con, "SELECT AdminID, Password FROM `Admin` WHERE `Email` = ?");
+                    mysqli_stmt_bind_param($stmt, "s", $email);
+                    mysqli_stmt_execute($stmt);
+                    $result = mysqli_stmt_get_result($stmt);
+
+                    if (mysqli_num_rows($result) > 0) {
+                        $row = mysqli_fetch_assoc($result);
+                        if (password_verify($pass, $row['Password'])) {
+                            // On successful login, check if "Remember Me" is ticked
+                            if (!empty($_POST['remember'])) {
+                                // Set cookie for 30 days
+                                setcookie("remember_email", $email, time() + (86400 * 30), "/");
+                            } else {
+                                // If not ticked, delete any existing cookie
+                                if (isset($_COOKIE['remember_email'])) {
+                                    setcookie("remember_email", "", time() - 3600, "/");
+                                }
+                            }
+                            
+                            $_SESSION['adminid'] = $row['AdminID'];
                             echo "<script>window.open('../Admin','_self')</script>";
+                        } else {
+                            echo "<div class='alert alert-danger mt-4' role='alert'>Invalid Password!</div>";
                         }
-                        else
-                        {
-                            echo "<div class='alert alert-danger mt-4' role='alert'>\n  Invalid Password!\n</div>";
-                        }
+                    } else {
+                        echo "<div class='alert alert-danger mt-4' role='alert'>Admin not Found!</div>";
                     }
-                    else
-                    {
-                        echo "<div class='alert alert-danger mt-4' role='alert'>\n  Admin not Found!\n</div>";
-                    }
+                    mysqli_stmt_close($stmt);
                 }
             ?>
         </div>
     </div>
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
-            <?PHP
-                if(isset($_POST['login']))
-                {
-                    $email=$_POST['email'];
-                    $pass=$_POST['pass'];
-                    $sql="SELECT * FROM `Admin` WHERE `Email`='$email'";
-                    $result=mysqli_query($con,$sql);
-                    $rows=mysqli_num_rows($result);
-                    if($rows>0)
-                    {
-                        while($row=mysqli_fetch_assoc($result))
-                        {
-                            $hpass=$row['Password'];
-                            $id=$row['AdminID'];
-                        }
-                        if(password_verify($pass, $hpass))
-                        {
-                            $_SESSION['adminid']=$id;
-                            echo "<script>window.open('../Admin','_self')</script>";
-                        }
-                        else
-                        {
-                            echo "<div class='alert alert-danger mt-4' role='alert'>
-  Invalid Password!
-</div>";
-                        }
-                    }
-                    else
-                    {
-                        echo "<div class='alert alert-danger mt-4' role='alert'>
-  Admin not Found!
-</div>";
-                    }
-                }
-            ?>
-        </div>
-    </div>
 </body>
 </html>
