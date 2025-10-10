@@ -77,13 +77,9 @@ $top_products = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - ManavikFab</title>
     
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
@@ -163,7 +159,7 @@ $top_products = [
 
         /* Tables: readable and consistent */
         table { font-size:.95rem }
-        thead.table-dark th { font-weight:700; font-size:.98rem }
+        thead th { font-weight:700; font-size:.98rem; background-color: #f8f9fa; }
         .table tbody tr td, .table thead th { padding:.75rem .9rem; vertical-align:middle }
         .table-responsive { overflow-x:auto }
 
@@ -179,15 +175,14 @@ $top_products = [
         }
 
         /* Reusable admin dropdown item style: bold, clear typography with icon alignment */
-    .admin-dropdown-item{ font-weight:700; font-size:0.95rem; color:#212529; display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem }
-    .dropdown-menu .admin-dropdown-item i{ width:20px; display:inline-flex; align-items:center; justify-content:center; font-size:1rem }
+        .admin-dropdown-item{ font-weight:700; font-size:0.95rem; color:#212529; display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem }
+        .dropdown-menu .admin-dropdown-item i{ width:20px; display:inline-flex; align-items:center; justify-content:center; font-size:1rem }
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <div class="row">
-    <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 sidebar p-0">
+    <div class="col-md-3 col-lg-2 sidebar p-0">
                 <div class="sidebar p-3">
                     <div class="text-center mb-4">
                         <h4 class="fw-bold text-dark">
@@ -229,9 +224,7 @@ $top_products = [
     </div>
             </div>
 
-    <!-- Main Content -->
-            <div class="col-md-9 col-lg-10 main-content p-4">
-                <!-- Top Navigation -->
+    <div class="col-md-9 col-lg-10 main-content p-4">
                 <nav class="navbar navbar-expand-lg">
                     <div class="container-fluid">
                         <h4 class="mb-0">Dashboard</h4>
@@ -252,7 +245,6 @@ $top_products = [
                 </nav>
 
                 <div class="p-4">
-                    <!-- Stats Cards -->
                     <div class="row g-4 mb-4">
                         <div class="col-md-3">
                             <div class="stats-card">
@@ -309,7 +301,6 @@ $top_products = [
                     </div>
 
                     <div class="row g-4">
-                        <!-- Recent Orders -->
                         <div class="col-lg-8">
                             <div class="table-container">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -357,7 +348,6 @@ $top_products = [
                             </div>
                         </div>
 
-                        <!-- Top Products -->
                         <div class="col-lg-4">
                             <div class="table-container">
                                 <h5 class="mb-3">Top Products</h5>
@@ -380,7 +370,6 @@ $top_products = [
                         </div>
                     </div>
 
-                    <!-- Charts Row -->
                     <div class="row g-4 mt-4">
                         <div class="col-lg-8">
                             <div class="table-container">
@@ -404,7 +393,6 @@ $top_products = [
                         </div>
                     </div>
 
-                    <!-- Quick Actions -->
                     <div class="row g-4 mt-4">
                         <div class="col-12">
                             <div class="table-container">
@@ -439,7 +427,6 @@ $top_products = [
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>

@@ -10,41 +10,26 @@ if (!isset($_SESSION['admin_id'])) {
 
 // Sample reports data
 $sales_data = [
-    ['month' => 'Jan', 'sales' => 125000, 'orders' => 45],
-    ['month' => 'Feb', 'sales' => 145000, 'orders' => 52],
-    ['month' => 'Mar', 'sales' => 135000, 'orders' => 48],
-    ['month' => 'Apr', 'sales' => 165000, 'orders' => 58],
-    ['month' => 'May', 'sales' => 155000, 'orders' => 55],
-    ['month' => 'Jun', 'sales' => 185000, 'orders' => 65],
-    ['month' => 'Jul', 'sales' => 175000, 'orders' => 62],
-    ['month' => 'Aug', 'sales' => 195000, 'orders' => 68],
-    ['month' => 'Sep', 'sales' => 185000, 'orders' => 65],
-    ['month' => 'Oct', 'sales' => 205000, 'orders' => 72],
-    ['month' => 'Nov', 'sales' => 225000, 'orders' => 78],
-    ['month' => 'Dec', 'sales' => 245000, 'orders' => 85]
+    ['month' => 'Jan', 'sales' => 125000, 'orders' => 45], ['month' => 'Feb', 'sales' => 145000, 'orders' => 52],
+    ['month' => 'Mar', 'sales' => 135000, 'orders' => 48], ['month' => 'Apr', 'sales' => 165000, 'orders' => 58],
+    ['month' => 'May', 'sales' => 155000, 'orders' => 55], ['month' => 'Jun', 'sales' => 185000, 'orders' => 65],
+    ['month' => 'Jul', 'sales' => 175000, 'orders' => 62], ['month' => 'Aug', 'sales' => 195000, 'orders' => 68],
+    ['month' => 'Sep', 'sales' => 185000, 'orders' => 65], ['month' => 'Oct', 'sales' => 205000, 'orders' => 72],
+    ['month' => 'Nov', 'sales' => 225000, 'orders' => 78], ['month' => 'Dec', 'sales' => 245000, 'orders' => 85]
 ];
-
 $category_sales = [
-    ['category' => 'Sarees', 'sales' => 35, 'revenue' => 87500],
-    ['category' => 'Lehengas', 'sales' => 20, 'revenue' => 70000],
-    ['category' => 'Kurtis', 'sales' => 25, 'revenue' => 37500],
-    ['category' => 'Dresses', 'sales' => 15, 'revenue' => 27000],
+    ['category' => 'Sarees', 'sales' => 35, 'revenue' => 87500], ['category' => 'Lehengas', 'sales' => 20, 'revenue' => 70000],
+    ['category' => 'Kurtis', 'sales' => 25, 'revenue' => 37500], ['category' => 'Dresses', 'sales' => 15, 'revenue' => 27000],
     ['category' => 'Accessories', 'sales' => 5, 'revenue' => 8000]
 ];
-
 $top_products = [
-    ['name' => 'Silk Saree - Traditional Red', 'sales' => 45, 'revenue' => 54000],
-    ['name' => 'Bridal Lehenga - Gold', 'sales' => 32, 'revenue' => 112000],
-    ['name' => 'Cotton Kurti - Blue Floral', 'sales' => 58, 'revenue' => 26100],
-    ['name' => 'Party Dress - Black', 'sales' => 28, 'revenue' => 50400],
+    ['name' => 'Silk Saree - Red', 'sales' => 45, 'revenue' => 54000], ['name' => 'Bridal Lehenga - Gold', 'sales' => 32, 'revenue' => 112000],
+    ['name' => 'Cotton Kurti - Blue', 'sales' => 58, 'revenue' => 26100], ['name' => 'Party Dress - Black', 'sales' => 28, 'revenue' => 50400],
     ['name' => 'Silver Jewelry Set', 'sales' => 42, 'revenue' => 33600]
 ];
-
 $customer_metrics = [
-    ['metric' => 'Total Customers', 'value' => 1250, 'change' => '+12%'],
-    ['metric' => 'New Customers', 'value' => 85, 'change' => '+8%'],
-    ['metric' => 'Repeat Customers', 'value' => 420, 'change' => '+15%'],
-    ['metric' => 'Average Order Value', 'value' => 2899, 'change' => '+5%']
+    ['metric' => 'Total Customers', 'value' => 1250, 'change' => '+12%'], ['metric' => 'New Customers', 'value' => 85, 'change' => '+8%'],
+    ['metric' => 'Repeat Customers', 'value' => 420, 'change' => '+15%'], ['metric' => 'Average Order Value', 'value' => 2899, 'change' => '+5%']
 ];
 ?>
 
@@ -55,546 +40,232 @@ $customer_metrics = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reports & Analytics - ManavikFab Admin</title>
     <meta name="description" content="View comprehensive business reports, sales analytics, and performance metrics in the ManavikFab admin panel">
-    <meta name="keywords" content="admin reports, business analytics, sales reports, e-commerce admin">
-    <meta name="author" content="ManavikFab">
     
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
+        /* START: Standardized CSS from index.php */
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { overflow-x: hidden; }
+
         body {
-            background: #f8f9fa;
             font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
+            background-color: #f8f9fa;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            color: #0f172a;
         }
-        
-        .admin-sidebar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-right: 1px solid rgba(255, 255, 255, 0.2);
+
+        .sidebar {
+            background: linear-gradient(135deg, #f8c9d8 0%, #f4b6cc 100%);
+            min-height: 100vh;
             position: fixed;
             top: 0;
             left: 0;
             width: 240px;
-            height: 100vh;
             z-index: 1000;
             overflow-y: auto;
         }
+        .sidebar .nav-link {
+            color: #2d2d2d;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            margin: 0.25rem 0;
+            transition: all 0.3s ease;
+            display: block;
+            align-items: center;
+        }
+        .sidebar .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #2d2d2d;
+            box-shadow: none;
+            width: 100%;
+        }
+        .sidebar .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #2d2d2d;
+        }
         
-        .admin-content {
+        .stats-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .stats-card:hover { transform: translateY(-5px); box-shadow: 0 12px 36px rgba(15,23,42,0.08); }
+
+        .main-content {
             margin-left: 240px;
-            max-width: calc(100vw - 240px);
+            max-width: calc(100% - 240px);
             background-color: #f8f9fa;
             font-size: 0.96rem;
-            overflow-x: hidden;
         }
+
+        .navbar { background: white; box-shadow: 0 6px 18px rgba(15,23,42,0.06); padding:.6rem 1rem }
+        .navbar .container-fluid h4.mb-0{ font-size:1.5rem; font-weight:800; letter-spacing:-0.2px; margin:0; color:#0f172a }
+
+        .table-container { background: white; border-radius: 1rem; padding: 1.25rem; box-shadow: 0 6px 18px rgba(15,23,42,0.04); }
+
+        .table-container h5 { font-size:1.05rem; font-weight:700; color:#0f172a; margin-bottom:.75rem }
+
+        table { font-size:.95rem }
+        thead th { font-weight:700; font-size:.98rem; background-color: #f8f9fa; }
+        .table tbody tr td, .table thead th { padding:.75rem .9rem; vertical-align:middle }
         
-        .sidebar-link {
-            color: #6c757d;
-            text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
+        @media (max-width: 991px){
+            .sidebar { position: relative; width: 100%; height: auto }
+            .main-content { margin-left: 0; max-width: 100%; padding-left: 1rem; padding-right: 1rem }
+            .navbar .container-fluid h4.mb-0{ font-size:1.25rem }
         }
-        
-        .sidebar-link:hover, .sidebar-link.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            transform: translateX(5px);
-        }
-        
-        .sidebar-link i {
-            margin-right: 10px;
-            width: 20px;
-        }
-        
-        .report-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 1.25rem;
-            box-shadow: 0 6px 18px rgba(15,23,42,0.06);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-            border: none;
-        }
-        .report-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 36px rgba(15,23,42,0.08);
-        }
-        
-        .metric-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 1.25rem;
-            box-shadow: 0 6px 18px rgba(15,23,42,0.06);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-            border: none;
-        }
-        .metric-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 36px rgba(15,23,42,0.08);
-        }
-        
+
+        .admin-dropdown-item{ font-weight:700; font-size:0.95rem; color:#212529; display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem }
+        .dropdown-menu .admin-dropdown-item i{ width:20px; display:inline-flex; align-items:center; justify-content:center; font-size:1rem }
+        /* END: Standardized CSS */
+
+        /* Custom styles for reports page */
+        .chart-container { position: relative; height: 320px; }
+        .positive-change { color: #198754; }
+        .negative-change { color: #dc3545; }
         .btn-custom {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
+            background: linear-gradient(135deg, #f8c9d8 0%, #f4b6cc 100%);
+            color: #2d2d2d;
             border: none;
             border-radius: 10px;
             padding: 10px 20px;
             font-weight: 600;
-            box-shadow: 0 2px 8px rgba(102,126,234,0.08);
-            transition: all 0.3s ease;
-        }
-        .btn-custom:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.18);
-            color: #fff;
-        }
-        
-        .chart-container {
-            position: relative;
-            height: 300px;
-            margin: 20px 0;
-        }
-        
-        .positive-change { color: #28a745; }
-        .negative-change { color: #dc3545; }
-        
-        .filter-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 1.25rem;
-            box-shadow: 0 6px 18px rgba(15,23,42,0.04);
-            border: none;
         }
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 admin-sidebar min-vh-100 p-0">
-                <div class="p-4">
-                    <h4 class="text-center mb-4">
-                        <i class="bi bi-shop text-primary"></i>
-                        ManavikFab
-                    </h4>
-                    
+            <div class="col-md-3 col-lg-2 sidebar p-0">
+                <div class="sidebar p-3">
+                    <div class="text-center mb-4">
+                        <h4 class="fw-bold text-dark">
+                            <i class="bi bi-heart-fill text-danger me-2"></i>ManavikFab
+                        </h4>
+                        <small class="text-muted">Admin Panel</small>
+                    </div>
                     <nav class="nav flex-column">
-                        <a href="index.php" class="sidebar-link">
-                            <i class="bi bi-speedometer2"></i> Dashboard
-                        </a>
-                        <a href="orders.php" class="sidebar-link">
-                            <i class="bi bi-cart-check"></i> Orders
-                        </a>
-                        <a href="products.php" class="sidebar-link">
-                            <i class="bi bi-box"></i> Products
-                        </a>
-                        <a href="customers.php" class="sidebar-link">
-                            <i class="bi bi-people"></i> Customers
-                        </a>
-                        <a href="categories.php" class="sidebar-link">
-                            <i class="bi bi-tags"></i> Categories
-                        </a>
-                        <a href="inventory.php" class="sidebar-link">
-                            <i class="bi bi-boxes"></i> Inventory
-                        </a>
-                        <a href="reports.php" class="sidebar-link active">
-                            <i class="bi bi-graph-up"></i> Reports
-                        </a>
-                        <a href="settings.php" class="sidebar-link">
-                            <i class="bi bi-gear"></i> Settings
-                        </a>
+                        <a class="nav-link" href="index.php"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+                        <a class="nav-link" href="orders.php"><i class="bi bi-cart3 me-2"></i>Orders</a>
+                        <a class="nav-link" href="products.php"><i class="bi bi-box me-2"></i>Products</a>
+                        <a class="nav-link" href="customers.php"><i class="bi bi-people me-2"></i>Customers</a>
+                        <a class="nav-link" href="categories.php"><i class="bi bi-tags me-2"></i>Categories</a>
+                        <a class="nav-link" href="inventory.php"><i class="bi bi-boxes me-2"></i>Inventory</a>
+                        <a class="nav-link active" href="reports.php"><i class="bi bi-graph-up me-2"></i>Reports</a>
+                        <a class="nav-link" href="settings.php"><i class="bi bi-gear me-2"></i>Settings</a>
+                        <hr>
+                        <a class="nav-link" href="../logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
                     </nav>
                 </div>
             </div>
-            
-            <!-- Main Content -->
-            <div class="col-md-9 col-lg-10 admin-content p-4">
-                <!-- PageHeader Card -->
-                <div class="page-header-card d-flex justify-content-between align-items-center mb-4" style="background: #fff; border-radius: 1rem; box-shadow: 0 6px 18px rgba(15,23,42,0.06); padding: 1.25rem;">
-                    <div>
-                        <h2 class="mb-1">
-                            <i class="bi bi-graph-up text-primary me-2"></i>
-                            Reports & Analytics
-                        </h2>
-                        <p class="text-muted mb-0">Comprehensive business insights and performance metrics</p>
+            <div class="col-md-9 col-lg-10 main-content p-0">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
+                        <h4 class="mb-0">Reports & Analytics</h4>
+                        <div class="d-flex align-items-center">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-person-circle me-2"></i>Admin
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item admin-dropdown-item" href="profile.php"><i class="bi bi-person me-0"></i>Profile</a></li>
+                                    <li><a class="dropdown-item admin-dropdown-item" href="settings.php"><i class="bi bi-gear me-0"></i>Settings</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item admin-dropdown-item" href="../logout.php"><i class="bi bi-box-arrow-right me-0"></i>Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-custom">
-                            <i class="bi bi-download me-2"></i>Export Report
-                        </button>
-                        <button class="btn btn-outline-secondary">
-                            <i class="bi bi-calendar me-2"></i>Date Range
-                        </button>
-                        <div class="dropdown">
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-circle me-2"></i>Admin
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="../logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
-                            </ul>
+                </nav>
+                <div class="p-4">
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-3">
+                            <div class="stats-card"><div class="d-flex align-items-center"><div class="flex-shrink-0"><i class="bi bi-currency-rupee text-success" style="font-size: 2rem;"></i></div><div class="flex-grow-1 ms-3"><h5 class="mb-1">₹<?php echo number_format(array_sum(array_column($sales_data, 'sales'))); ?></h5><small class="text-muted">Total Revenue</small></div></div></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stats-card"><div class="d-flex align-items-center"><div class="flex-shrink-0"><i class="bi bi-cart3 text-primary" style="font-size: 2rem;"></i></div><div class="flex-grow-1 ms-3"><h5 class="mb-1"><?php echo array_sum(array_column($sales_data, 'orders')); ?></h5><small class="text-muted">Total Orders</small></div></div></div>
+                        </div>
+                        <div class="col-md-3">
+                             <div class="stats-card"><div class="d-flex align-items-center"><div class="flex-shrink-0"><i class="bi bi-people text-warning" style="font-size: 2rem;"></i></div><div class="flex-grow-1 ms-3"><h5 class="mb-1"><?php echo $customer_metrics[0]['value']; ?></h5><small class="text-muted">Total Customers</small></div></div></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stats-card"><div class="d-flex align-items-center"><div class="flex-shrink-0"><i class="bi bi-graph-up text-info" style="font-size: 2rem;"></i></div><div class="flex-grow-1 ms-3"><h5 class="mb-1">₹<?php echo number_format($customer_metrics[3]['value']); ?></h5><small class="text-muted">Avg Order Value</small></div></div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container p-4 mb-4">
+                        <h5 class="mb-3"><i class="bi bi-funnel me-2"></i>Report Filters</h5>
+                        <form class="row">
+                            <div class="col-md-3 mb-3"><label class="form-label">Date Range</label><select class="form-select"><option>Last 30 Days</option><option>Last 90 Days</option><option>Last Year</option></select></div>
+                            <div class="col-md-3 mb-3"><label class="form-label">Category</label><select class="form-select"><option>All Categories</option><option>Sarees</option><option>Lehengas</option></select></div>
+                            <div class="col-md-3 mb-3"><label class="form-label">Report Type</label><select class="form-select"><option>Sales Report</option><option>Customer Report</option></select></div>
+                            <div class="col-md-3 d-flex align-items-end mb-3"><button class="btn btn-custom w-100"><i class="bi bi-download me-2"></i>Generate & Export</button></div>
+                        </form>
+                    </div>
+                    
+                    <div class="row g-4 mb-4">
+                        <div class="col-lg-8"><div class="table-container p-4 h-100"><h5 class="mb-3"><i class="bi bi-graph-up me-2"></i>Sales Trend (Last 12 Months)</h5><div class="chart-container"><canvas id="salesChart"></canvas></div></div></div>
+                        <div class="col-lg-4"><div class="table-container p-4 h-100"><h5 class="mb-3"><i class="bi bi-pie-chart me-2"></i>Category Revenue</h5><div class="chart-container"><canvas id="categoryChart"></canvas></div></div></div>
+                    </div>
+                    
+                    <div class="table-container p-4">
+                        <h5 class="mb-3"><i class="bi bi-table me-2"></i>Detailed Monthly Report</h5>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead><tr><th>Month</th><th>Sales (₹)</th><th>Orders</th><th>Avg Order Value</th><th>Growth</th></tr></thead>
+                                <tbody>
+                                    <?php foreach($sales_data as $index => $data): ?>
+                                    <tr>
+                                        <td><strong><?php echo $data['month']; ?></strong></td>
+                                        <td>₹<?php echo number_format($data['sales']); ?></td>
+                                        <td><?php echo $data['orders']; ?></td>
+                                        <td>₹<?php echo number_format($data['sales'] / $data['orders']); ?></td>
+                                        <td>
+                                            <?php if($index > 0): $growth = (($data['sales'] - $sales_data[$index-1]['sales']) / $sales_data[$index-1]['sales']) * 100; ?>
+                                                <span class="<?php echo $growth >= 0 ? 'positive-change' : 'negative-change'; ?>">
+                                                    <?php echo ($growth >= 0 ? '+' : ''); ?><?php echo round($growth, 1); ?>% <i class="bi <?php echo $growth >= 0 ? 'bi-arrow-up' : 'bi-arrow-down'; ?>"></i>
+                                                </span>
+                                            <?php else: echo '<span class="text-muted">-</span>'; endif; ?>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                    
-                    <!-- Key Metrics -->
-                    <div class="row mb-4">
-                        <div class="col-md-3 mb-3">
-                            <div class="metric-card p-3 text-center">
-                                <i class="bi bi-currency-rupee text-success" style="font-size: 2rem;"></i>
-                                <h4 class="mt-2 mb-1">₹<?php echo number_format(array_sum(array_column($sales_data, 'sales'))); ?></h4>
-                                <small class="text-muted">Total Revenue</small>
-                                <div class="mt-2">
-                                    <span class="positive-change">+15% <i class="bi bi-arrow-up"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="metric-card p-3 text-center">
-                                <i class="bi bi-cart-check text-primary" style="font-size: 2rem;"></i>
-                                <h4 class="mt-2 mb-1"><?php echo array_sum(array_column($sales_data, 'orders')); ?></h4>
-                                <small class="text-muted">Total Orders</small>
-                                <div class="mt-2">
-                                    <span class="positive-change">+8% <i class="bi bi-arrow-up"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="metric-card p-3 text-center">
-                                <i class="bi bi-people text-info" style="font-size: 2rem;"></i>
-                                <h4 class="mt-2 mb-1"><?php echo $customer_metrics[0]['value']; ?></h4>
-                                <small class="text-muted">Total Customers</small>
-                                <div class="mt-2">
-                                    <span class="positive-change">+12% <i class="bi bi-arrow-up"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="metric-card p-3 text-center">
-                                <i class="bi bi-graph-up text-warning" style="font-size: 2rem;"></i>
-                                <h4 class="mt-2 mb-1">₹<?php echo number_format($customer_metrics[3]['value']); ?></h4>
-                                <small class="text-muted">Avg Order Value</small>
-                                <div class="mt-2">
-                                    <span class="positive-change">+5% <i class="bi bi-arrow-up"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Filters -->
-                    <div class="filter-card p-4 mb-4">
-                        <h5 class="mb-3"><i class="bi bi-funnel me-2"></i>Report Filters</h5>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label">Date Range</label>
-                                <select class="form-select">
-                                    <option value="last-30">Last 30 Days</option>
-                                    <option value="last-90">Last 90 Days</option>
-                                    <option value="last-6-months">Last 6 Months</option>
-                                    <option value="last-year">Last Year</option>
-                                    <option value="custom">Custom Range</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label">Category</label>
-                                <select class="form-select">
-                                    <option value="">All Categories</option>
-                                    <option value="sarees">Sarees</option>
-                                    <option value="lehengas">Lehengas</option>
-                                    <option value="kurtis">Kurtis</option>
-                                    <option value="dresses">Dresses</option>
-                                    <option value="accessories">Accessories</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label">Report Type</label>
-                                <select class="form-select">
-                                    <option value="sales">Sales Report</option>
-                                    <option value="inventory">Inventory Report</option>
-                                    <option value="customer">Customer Report</option>
-                                    <option value="product">Product Report</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label">Export Format</label>
-                                <select class="form-select">
-                                    <option value="pdf">PDF</option>
-                                    <option value="excel">Excel</option>
-                                    <option value="csv">CSV</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="text-end">
-                            <button class="btn btn-custom me-2">
-                                <i class="bi bi-search me-2"></i>Generate Report
-                            </button>
-                            <button class="btn btn-outline-secondary">
-                                <i class="bi bi-arrow-clockwise me-2"></i>Reset
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Charts Row 1 -->
-                    <div class="row mb-4">
-                        <div class="col-lg-8 mb-4">
-                            <div class="report-card p-4">
-                                <h5 class="mb-3">
-                                    <i class="bi bi-graph-up me-2"></i>Sales Trend (Last 12 Months)
-                                </h5>
-                                <div class="chart-container">
-                                    <canvas id="salesChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 mb-4">
-                            <div class="report-card p-4">
-                                <h5 class="mb-3">
-                                    <i class="bi bi-pie-chart me-2"></i>Category Distribution
-                                </h5>
-                                <div class="chart-container">
-                                    <canvas id="categoryChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Charts Row 2 -->
-                    <div class="row mb-4">
-                        <div class="col-lg-6 mb-4">
-                            <div class="report-card p-4">
-                                <h5 class="mb-3">
-                                    <i class="bi bi-bar-chart me-2"></i>Top Products by Revenue
-                                </h5>
-                                <div class="chart-container">
-                                    <canvas id="productsChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 mb-4">
-                            <div class="report-card p-4">
-                                <h5 class="mb-3">
-                                    <i class="bi bi-people me-2"></i>Customer Metrics
-                                </h5>
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Metric</th>
-                                                <th>Value</th>
-                                                <th>Change</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach($customer_metrics as $metric): ?>
-                                            <tr>
-                                                <td><?php echo $metric['metric']; ?></td>
-                                                <td>
-                                                    <?php if(strpos($metric['metric'], 'Value') !== false): ?>
-                                                        ₹<?php echo number_format($metric['value']); ?>
-                                                    <?php else: ?>
-                                                        <?php echo number_format($metric['value']); ?>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td>
-                                                    <span class="<?php echo strpos($metric['change'], '+') !== false ? 'positive-change' : 'negative-change'; ?>">
-                                                        <?php echo $metric['change']; ?>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Detailed Reports -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="report-card p-4">
-                                <h5 class="mb-3">
-                                    <i class="bi bi-table me-2"></i>Detailed Sales Report
-                                </h5>
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Month</th>
-                                                <th>Sales (₹)</th>
-                                                <th>Orders</th>
-                                                <th>Avg Order Value</th>
-                                                <th>Growth</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach($sales_data as $index => $data): ?>
-                                            <tr>
-                                                <td><strong><?php echo $data['month']; ?></strong></td>
-                                                <td>₹<?php echo number_format($data['sales']); ?></td>
-                                                <td><?php echo $data['orders']; ?></td>
-                                                <td>₹<?php echo number_format($data['sales'] / $data['orders']); ?></td>
-                                                <td>
-                                                    <?php if($index > 0): ?>
-                                                        <?php 
-                                                        $growth = (($data['sales'] - $sales_data[$index-1]['sales']) / $sales_data[$index-1]['sales']) * 100;
-                                                        $growth_class = $growth >= 0 ? 'positive-change' : 'negative-change';
-                                                        $growth_icon = $growth >= 0 ? 'bi-arrow-up' : 'bi-arrow-down';
-                                                        ?>
-                                                        <span class="<?php echo $growth_class; ?>">
-                                                            <?php echo ($growth >= 0 ? '+' : ''); ?><?php echo round($growth, 1); ?>% 
-                                                            <i class="bi <?php echo $growth_icon; ?>"></i>
-                                                        </span>
-                                                    <?php else: ?>
-                                                        <span class="text-muted">-</span>
-                                                    <?php endif; ?>
-                                                </td>
-                                            </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
             </div>
         </div>
     </div>
     
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script>
-        // Sales Trend Chart
         const salesCtx = document.getElementById('salesChart').getContext('2d');
         new Chart(salesCtx, {
             type: 'line',
             data: {
                 labels: <?php echo json_encode(array_column($sales_data, 'month')); ?>,
-                datasets: [{
-                    label: 'Sales (₹)',
-                    data: <?php echo json_encode(array_column($sales_data, 'sales')); ?>,
-                    borderColor: '#667eea',
-                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                    tension: 0.4,
-                    fill: true
-                }, {
-                    label: 'Orders',
-                    data: <?php echo json_encode(array_column($sales_data, 'orders')); ?>,
-                    borderColor: '#764ba2',
-                    backgroundColor: 'rgba(118, 75, 162, 0.1)',
-                    tension: 0.4,
-                    fill: true,
-                    yAxisID: 'y1'
-                }]
+                datasets: [{ label: 'Sales (₹)', data: <?php echo json_encode(array_column($sales_data, 'sales')); ?>, borderColor: '#f4b6cc', backgroundColor: 'rgba(244, 182, 204, 0.2)', tension: 0.4, fill: true }]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        type: 'linear',
-                        display: true,
-                        position: 'left',
-                        title: {
-                            display: true,
-                            text: 'Sales (₹)'
-                        }
-                    },
-                    y1: {
-                        type: 'linear',
-                        display: true,
-                        position: 'right',
-                        title: {
-                            display: true,
-                            text: 'Orders'
-                        },
-                        grid: {
-                            drawOnChartArea: false,
-                        },
-                    }
-                }
-            }
+            options: { responsive: true, maintainAspectRatio: false }
         });
         
-        // Category Distribution Chart
         const categoryCtx = document.getElementById('categoryChart').getContext('2d');
         new Chart(categoryCtx, {
             type: 'doughnut',
             data: {
                 labels: <?php echo json_encode(array_column($category_sales, 'category')); ?>,
-                datasets: [{
-                    data: <?php echo json_encode(array_column($category_sales, 'revenue')); ?>,
-                    backgroundColor: [
-                        '#667eea',
-                        '#764ba2',
-                        '#f093fb',
-                        '#f5576c',
-                        '#4facfe'
-                    ]
-                }]
+                datasets: [{ data: <?php echo json_encode(array_column($category_sales, 'revenue')); ?>, backgroundColor: ['#f8c9d8', '#f4b6cc', '#e56b6f', '#d89a9e', '#b68d91'] }]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-        
-        // Top Products Chart
-        const productsCtx = document.getElementById('productsChart').getContext('2d');
-        new Chart(productsCtx, {
-            type: 'bar',
-            data: {
-                labels: <?php echo json_encode(array_column($top_products, 'name')); ?>,
-                datasets: [{
-                    label: 'Revenue (₹)',
-                    data: <?php echo json_encode(array_column($top_products, 'revenue')); ?>,
-                    backgroundColor: 'rgba(102, 126, 234, 0.8)',
-                    borderColor: '#667eea',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Revenue (₹)'
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
-        
-        // Add event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Reports page loaded');
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
         });
     </script>
 </body>
-</html> 
+</html>

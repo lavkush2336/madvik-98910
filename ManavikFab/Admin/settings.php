@@ -2,661 +2,168 @@
 session_start();
 include '../connection.php';
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
     // header("Location: login.php");
     // exit();
 }
 
-// Sample settings data
-$general_settings = [
-    'site_name' => 'ManavikFab',
-    'site_description' => 'Premium Fashion for Women',
-    'site_email' => 'info@manavikfab.com',
-    'site_phone' => '+91 98765 43210',
-    'site_address' => '123 Fashion Street, New Delhi - 110001',
-    'currency' => 'INR',
-    'timezone' => 'Asia/Kolkata',
-    'language' => 'English'
-];
-
-$email_settings = [
-    'smtp_host' => 'smtp.gmail.com',
-    'smtp_port' => '587',
-    'smtp_username' => 'noreply@manavikfab.com',
-    'smtp_password' => '********',
-    'smtp_encryption' => 'tls',
-    'from_name' => 'ManavikFab',
-    'from_email' => 'noreply@manavikfab.com'
-];
-
-$payment_settings = [
-    'razorpay_key' => 'rzp_test_********',
-    'razorpay_secret' => '********',
-    'paypal_client_id' => '********',
-    'paypal_secret' => '********',
-    'cod_enabled' => true,
-    'online_payment_enabled' => true
-];
-
-$shipping_settings = [
-    'free_shipping_threshold' => 999,
-    'standard_shipping_cost' => 99,
-    'express_shipping_cost' => 199,
-    'delivery_time_standard' => '3-5 days',
-    'delivery_time_express' => '1-2 days'
-];
+$general_settings = ['site_name' => 'ManavikFab', 'site_description' => 'Premium Fashion for Women', 'site_email' => 'info@manavikfab.com', 'site_phone' => '+91 98765 43210'];
+$payment_settings = ['razorpay_key' => 'rzp_test_********', 'cod_enabled' => true];
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings - ManavikFab Admin</title>
-    <meta name="description" content="Manage website settings, configuration, and system preferences in the ManavikFab admin panel">
-    <meta name="keywords" content="admin settings, website configuration, system settings, e-commerce admin">
-    <meta name="author" content="ManavikFab">
+    <title>Settings - ManavikFab</title>
     
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { overflow-x: hidden; }
         body {
-            background: #f8f9fa;
             font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
+            background-color: #f8f9fa;
+            color: #0f172a;
         }
-        
-        .admin-sidebar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        .sidebar {
+            background: linear-gradient(135deg, #f8c9d8 0%, #f4b6cc 100%);
+            min-height: 100vh;
             position: fixed;
             top: 0;
             left: 0;
             width: 240px;
-            height: 100vh;
             z-index: 1000;
             overflow-y: auto;
         }
-        
-        .admin-content {
+        .sidebar .nav-link {
+            color: #2d2d2d;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            margin: 0.25rem 0;
+            transition: all 0.3s ease;
+        }
+        .sidebar .nav-link.active, .sidebar .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #2d2d2d;
+        }
+        .main-content {
             margin-left: 240px;
-            max-width: calc(100vw - 240px);
             background-color: #f8f9fa;
-            font-size: 0.96rem;
-            min-height: 100vh;
-            padding-bottom: 1rem;
-            overflow-x: hidden;
         }
-        
-        .sidebar-link {
-            color: #6c757d;
-            text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-        
-        .sidebar-link:hover, .sidebar-link.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            transform: translateX(5px);
-        }
-        
-        .sidebar-link i {
-            margin-right: 10px;
-            width: 20px;
-        }
-        
-        .settings-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 1.25rem;
-            box-shadow: 0 6px 18px rgba(15,23,42,0.06);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-            border: none;
-        }
-        .settings-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 36px rgba(15,23,42,0.08);
-        }
-        
-        .btn-custom {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-weight: 600;
-            box-shadow: 0 2px 8px rgba(102,126,234,0.08);
-            transition: all 0.3s ease;
-        }
-        .btn-custom:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.18);
-            color: #fff;
-        }
-        
-        .nav-pills .nav-link {
-            color: #6c757d;
-            border-radius: 10px;
-            margin-bottom: 5px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
+        .navbar { background: white; box-shadow: 0 6px 18px rgba(15,23,42,0.06); padding:.6rem 1rem }
+        .navbar .container-fluid h4.mb-0{ font-size:1.5rem; font-weight:800; }
+        .table-container { background: white; border-radius: 1rem; padding: 1.25rem; box-shadow: 0 6px 18px rgba(15,23,42,0.04); }
+        .table-container h5 { font-weight:700; color:#0f172a; margin-bottom:.75rem }
+        .nav-pills .nav-link { color: #6c757d; }
         .nav-pills .nav-link.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-            font-weight: 600;
-            box-shadow: 0 2px 8px rgba(102,126,234,0.08);
+            background-color: #f4b6cc;
+            color: #2d2d2d;
         }
-        
-        .form-control, .form-select {
-            border-radius: 8px;
-            font-size: 1rem;
-            border: 1px solid #e5e7eb;
-            background: #fff;
-            color: #222;
-            box-shadow: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
+        @media (max-width: 991px){
+            .sidebar { position: relative; width: 100%; height: auto }
+            .main-content { margin-left: 0; max-width: 100%; }
         }
-        .form-control:focus, .form-select:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
-        }
-        
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-        
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        
-        input:checked + .slider {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
+        .admin-dropdown-item{ font-weight:700; font-size:0.95rem; color:#212529; display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem }
+        .dropdown-menu .admin-dropdown-item i{ width:20px; display:inline-flex; align-items:center; justify-content:center; }
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 admin-sidebar min-vh-100 p-0">
-                <div class="p-4">
-                    <h4 class="text-center mb-4">
-                        <i class="bi bi-shop text-primary"></i>
-                        ManavikFab
-                    </h4>
-                    
+            <div class="col-md-3 col-lg-2 sidebar p-0">
+                <div class="sidebar p-3">
+                    <div class="text-center mb-4">
+                        <h4 class="fw-bold text-dark"><i class="bi bi-heart-fill text-danger me-2"></i>ManavikFab</h4>
+                        <small class="text-muted">Admin Panel</small>
+                    </div>
                     <nav class="nav flex-column">
-                        <a href="index.php" class="sidebar-link">
-                            <i class="bi bi-speedometer2"></i> Dashboard
-                        </a>
-                        <a href="orders.php" class="sidebar-link">
-                            <i class="bi bi-cart-check"></i> Orders
-                        </a>
-                        <a href="products.php" class="sidebar-link">
-                            <i class="bi bi-box"></i> Products
-                        </a>
-                        <a href="customers.php" class="sidebar-link">
-                            <i class="bi bi-people"></i> Customers
-                        </a>
-                        <a href="categories.php" class="sidebar-link">
-                            <i class="bi bi-tags"></i> Categories
-                        </a>
-                        <a href="inventory.php" class="sidebar-link">
-                            <i class="bi bi-boxes"></i> Inventory
-                        </a>
-                        <a href="reports.php" class="sidebar-link">
-                            <i class="bi bi-graph-up"></i> Reports
-                        </a>
-                        <a href="settings.php" class="sidebar-link active">
-                            <i class="bi bi-gear"></i> Settings
-                        </a>
+                        <a class="nav-link" href="index.php"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+                        <a class="nav-link" href="orders.php"><i class="bi bi-cart3 me-2"></i>Orders</a>
+                        <a class="nav-link" href="products.php"><i class="bi bi-box me-2"></i>Products</a>
+                        <a class="nav-link" href="customers.php"><i class="bi bi-people me-2"></i>Customers</a>
+                        <a class="nav-link" href="categories.php"><i class="bi bi-tags me-2"></i>Categories</a>
+                        <a class="nav-link" href="inventory.php"><i class="bi bi-boxes me-2"></i>Inventory</a>
+                        <a class="nav-link" href="reports.php"><i class="bi bi-graph-up me-2"></i>Reports</a>
+                        <a class="nav-link active" href="settings.php"><i class="bi bi-gear me-2"></i>Settings</a>
+                        <hr>
+                        <a class="nav-link" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
                     </nav>
                 </div>
             </div>
             
-            <!-- Main Content -->
-            <div class="col-md-9 col-lg-10 admin-content p-4">
-                <!-- PageHeader Card -->
-                <div class="page-header-card d-flex justify-content-between align-items-center mb-4" style="background: #fff; border-radius: 1rem; box-shadow: 0 6px 18px rgba(15,23,42,0.06); padding: 1.25rem;">
-                    <div>
-                        <h2 class="mb-1">
-                            <i class="bi bi-gear text-primary me-2"></i>
-                            Settings
-                        </h2>
-                        <p class="text-muted mb-0">Manage website configuration and system preferences</p>
+            <div class="col-md-9 col-lg-10 main-content p-4">
+                 <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
+                        <h4 class="mb-0">Settings</h4>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-2"></i>Admin
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item admin-dropdown-item" href="profile.php"><i class="bi bi-person"></i>Profile</a></li>
+                                <li><a class="dropdown-item admin-dropdown-item" href="settings.php"><i class="bi bi-gear"></i>Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item admin-dropdown-item" href="logout.php"><i class="bi bi-box-arrow-right"></i>Logout</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="dropdown">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle me-2"></i>Admin
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="../logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-                    
-                    <!-- Settings Navigation -->
+                </nav>
+
+                <div class="p-4">
                     <div class="row">
                         <div class="col-md-3">
-                            <div class="settings-card p-4">
-                                <nav class="nav flex-column nav-pills">
-                                    <a class="nav-link active" data-bs-toggle="pill" href="#general">
-                                        <i class="bi bi-gear me-2"></i>General
-                                    </a>
-                                    <a class="nav-link" data-bs-toggle="pill" href="#email">
-                                        <i class="bi bi-envelope me-2"></i>Email
-                                    </a>
-                                    <a class="nav-link" data-bs-toggle="pill" href="#payment">
-                                        <i class="bi bi-credit-card me-2"></i>Payment
-                                    </a>
-                                    <a class="nav-link" data-bs-toggle="pill" href="#shipping">
-                                        <i class="bi bi-truck me-2"></i>Shipping
-                                    </a>
-                                    <a class="nav-link" data-bs-toggle="pill" href="#security">
-                                        <i class="bi bi-shield-lock me-2"></i>Security
-                                    </a>
-                                    <a class="nav-link" data-bs-toggle="pill" href="#backup">
-                                        <i class="bi bi-cloud-arrow-up me-2"></i>Backup
-                                    </a>
-                                </nav>
+                            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <button class="nav-link active" id="v-pills-general-tab" data-bs-toggle="pill" data-bs-target="#v-pills-general">General</button>
+                                <button class="nav-link" id="v-pills-payment-tab" data-bs-toggle="pill" data-bs-target="#v-pills-payment">Payment</button>
+                                <button class="nav-link" id="v-pills-shipping-tab" data-bs-toggle="pill" data-bs-target="#v-pills-shipping">Shipping</button>
+                                <button class="nav-link" id="v-pills-security-tab" data-bs-toggle="pill" data-bs-target="#v-pills-security">Security</button>
                             </div>
                         </div>
-                        
                         <div class="col-md-9">
-                            <div class="tab-content">
-                                <!-- General Settings -->
-                                <div class="tab-pane fade show active" id="general">
-                                    <div class="settings-card p-4">
-                                        <h5 class="mb-4">
-                                            <i class="bi bi-gear me-2"></i>General Settings
-                                        </h5>
-                                        <form>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Site Name</label>
-                                                    <input type="text" class="form-control" value="<?php echo $general_settings['site_name']; ?>">
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Site Description</label>
-                                                    <input type="text" class="form-control" value="<?php echo $general_settings['site_description']; ?>">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Site Email</label>
-                                                    <input type="email" class="form-control" value="<?php echo $general_settings['site_email']; ?>">
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Site Phone</label>
-                                                    <input type="text" class="form-control" value="<?php echo $general_settings['site_phone']; ?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Site Address</label>
-                                                <textarea class="form-control" rows="3"><?php echo $general_settings['site_address']; ?></textarea>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-4 mb-3">
-                                                    <label class="form-label">Currency</label>
-                                                    <select class="form-select">
-                                                        <option value="INR" <?php echo $general_settings['currency'] == 'INR' ? 'selected' : ''; ?>>INR (₹)</option>
-                                                        <option value="USD">USD ($)</option>
-                                                        <option value="EUR">EUR (€)</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4 mb-3">
-                                                    <label class="form-label">Timezone</label>
-                                                    <select class="form-select">
-                                                        <option value="Asia/Kolkata" <?php echo $general_settings['timezone'] == 'Asia/Kolkata' ? 'selected' : ''; ?>>Asia/Kolkata</option>
-                                                        <option value="UTC">UTC</option>
-                                                        <option value="America/New_York">America/New_York</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4 mb-3">
-                                                    <label class="form-label">Language</label>
-                                                    <select class="form-select">
-                                                        <option value="English" <?php echo $general_settings['language'] == 'English' ? 'selected' : ''; ?>>English</option>
-                                                        <option value="Hindi">Hindi</option>
-                                                        <option value="Spanish">Spanish</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="text-end">
-                                                <button type="submit" class="btn btn-custom">Save Changes</button>
-                                            </div>
-                                        </form>
-                                    </div>
+                            <div class="tab-content table-container" id="v-pills-tabContent">
+                                <div class="tab-pane fade show active" id="v-pills-general">
+                                    <h5>General Settings</h5>
+                                    <form>
+                                        <div class="mb-3"><label class="form-label">Site Name</label><input type="text" class="form-control" value="<?php echo $general_settings['site_name']; ?>"></div>
+                                        <div class="mb-3"><label class="form-label">Site Description</label><input type="text" class="form-control" value="<?php echo $general_settings['site_description']; ?>"></div>
+                                        <div class="mb-3"><label class="form-label">Contact Email</label><input type="email" class="form-control" value="<?php echo $general_settings['site_email']; ?>"></div>
+                                        <div class="mb-3"><label class="form-label">Contact Phone</label><input type="tel" class="form-control" value="<?php echo $general_settings['site_phone']; ?>"></div>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </form>
                                 </div>
-                                
-                                <!-- Email Settings -->
-                                <div class="tab-pane fade" id="email">
-                                    <div class="settings-card p-4">
-                                        <h5 class="mb-4">
-                                            <i class="bi bi-envelope me-2"></i>Email Settings
-                                        </h5>
-                                        <form>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">SMTP Host</label>
-                                                    <input type="text" class="form-control" value="<?php echo $email_settings['smtp_host']; ?>">
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">SMTP Port</label>
-                                                    <input type="number" class="form-control" value="<?php echo $email_settings['smtp_port']; ?>">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">SMTP Username</label>
-                                                    <input type="email" class="form-control" value="<?php echo $email_settings['smtp_username']; ?>">
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">SMTP Password</label>
-                                                    <input type="password" class="form-control" value="<?php echo $email_settings['smtp_password']; ?>">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Encryption</label>
-                                                    <select class="form-select">
-                                                        <option value="tls" <?php echo $email_settings['smtp_encryption'] == 'tls' ? 'selected' : ''; ?>>TLS</option>
-                                                        <option value="ssl">SSL</option>
-                                                        <option value="none">None</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">From Name</label>
-                                                    <input type="text" class="form-control" value="<?php echo $email_settings['from_name']; ?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">From Email</label>
-                                                <input type="email" class="form-control" value="<?php echo $email_settings['from_email']; ?>">
-                                            </div>
-                                            <div class="text-end">
-                                                <button type="button" class="btn btn-outline-secondary me-2">Test Email</button>
-                                                <button type="submit" class="btn btn-custom">Save Changes</button>
-                                            </div>
-                                        </form>
-                                    </div>
+                                <div class="tab-pane fade" id="v-pills-payment">
+                                    <h5>Payment Settings</h5>
+                                    <form>
+                                        <div class="mb-3"><label class="form-label">Razorpay Key</label><input type="text" class="form-control" value="<?php echo $payment_settings['razorpay_key']; ?>"></div>
+                                        <div class="form-check form-switch mb-3"><input class="form-check-input" type="checkbox" <?php echo $payment_settings['cod_enabled'] ? 'checked' : ''; ?>><label class="form-check-label">Enable Cash on Delivery</label></div>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </form>
                                 </div>
-                                
-                                <!-- Payment Settings -->
-                                <div class="tab-pane fade" id="payment">
-                                    <div class="settings-card p-4">
-                                        <h5 class="mb-4">
-                                            <i class="bi bi-credit-card me-2"></i>Payment Settings
-                                        </h5>
-                                        <form>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Razorpay Key</label>
-                                                    <input type="text" class="form-control" value="<?php echo $payment_settings['razorpay_key']; ?>">
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Razorpay Secret</label>
-                                                    <input type="password" class="form-control" value="<?php echo $payment_settings['razorpay_secret']; ?>">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">PayPal Client ID</label>
-                                                    <input type="text" class="form-control" value="<?php echo $payment_settings['paypal_client_id']; ?>">
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">PayPal Secret</label>
-                                                    <input type="password" class="form-control" value="<?php echo $payment_settings['paypal_secret']; ?>">
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <label class="form-label d-flex align-items-center">
-                                                        <span class="me-3">Cash on Delivery</span>
-                                                        <label class="switch">
-                                                            <input type="checkbox" <?php echo $payment_settings['cod_enabled'] ? 'checked' : ''; ?>>
-                                                            <span class="slider"></span>
-                                                        </label>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label d-flex align-items-center">
-                                                        <span class="me-3">Online Payment</span>
-                                                        <label class="switch">
-                                                            <input type="checkbox" <?php echo $payment_settings['online_payment_enabled'] ? 'checked' : ''; ?>>
-                                                            <span class="slider"></span>
-                                                        </label>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="text-end">
-                                                <button type="submit" class="btn btn-custom">Save Changes</button>
-                                            </div>
-                                        </form>
-                                    </div>
+                                <div class="tab-pane fade" id="v-pills-shipping">
+                                    <h5>Shipping Settings</h5>
+                                    <p>Configure your shipping rates and zones here.</p>
                                 </div>
-                                
-                                <!-- Shipping Settings -->
-                                <div class="tab-pane fade" id="shipping">
-                                    <div class="settings-card p-4">
-                                        <h5 class="mb-4">
-                                            <i class="bi bi-truck me-2"></i>Shipping Settings
-                                        </h5>
-                                        <form>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Free Shipping Threshold (₹)</label>
-                                                    <input type="number" class="form-control" value="<?php echo $shipping_settings['free_shipping_threshold']; ?>">
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Standard Shipping Cost (₹)</label>
-                                                    <input type="number" class="form-control" value="<?php echo $shipping_settings['standard_shipping_cost']; ?>">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Express Shipping Cost (₹)</label>
-                                                    <input type="number" class="form-control" value="<?php echo $shipping_settings['express_shipping_cost']; ?>">
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Standard Delivery Time</label>
-                                                    <input type="text" class="form-control" value="<?php echo $shipping_settings['delivery_time_standard']; ?>">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Express Delivery Time</label>
-                                                <input type="text" class="form-control" value="<?php echo $shipping_settings['delivery_time_express']; ?>">
-                                            </div>
-                                            <div class="text-end">
-                                                <button type="submit" class="btn btn-custom">Save Changes</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                
-                                <!-- Security Settings -->
-                                <div class="tab-pane fade" id="security">
-                                    <div class="settings-card p-4">
-                                        <h5 class="mb-4">
-                                            <i class="bi bi-shield-lock me-2"></i>Security Settings
-                                        </h5>
-                                        <form>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Current Password</label>
-                                                    <input type="password" class="form-control">
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">New Password</label>
-                                                    <input type="password" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Confirm New Password</label>
-                                                <input type="password" class="form-control">
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <label class="form-label d-flex align-items-center">
-                                                        <span class="me-3">Two-Factor Authentication</span>
-                                                        <label class="switch">
-                                                            <input type="checkbox">
-                                                            <span class="slider"></span>
-                                                        </label>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label d-flex align-items-center">
-                                                        <span class="me-3">Login Notifications</span>
-                                                        <label class="switch">
-                                                            <input type="checkbox" checked>
-                                                            <span class="slider"></span>
-                                                        </label>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="text-end">
-                                                <button type="submit" class="btn btn-custom">Update Password</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                
-                                <!-- Backup Settings -->
-                                <div class="tab-pane fade" id="backup">
-                                    <div class="settings-card p-4">
-                                        <h5 class="mb-4">
-                                            <i class="bi bi-cloud-arrow-up me-2"></i>Backup Settings
-                                        </h5>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-4">
-                                                <div class="card">
-                                                    <div class="card-body text-center">
-                                                        <i class="bi bi-download text-primary" style="font-size: 3rem;"></i>
-                                                        <h6 class="mt-3">Download Backup</h6>
-                                                        <p class="text-muted">Download a complete backup of your data</p>
-                                                        <button class="btn btn-custom">Download Backup</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 mb-4">
-                                                <div class="card">
-                                                    <div class="card-body text-center">
-                                                        <i class="bi bi-upload text-success" style="font-size: 3rem;"></i>
-                                                        <h6 class="mt-3">Restore Backup</h6>
-                                                        <p class="text-muted">Restore from a previous backup file</p>
-                                                        <button class="btn btn-outline-success">Restore Backup</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h6>Automatic Backup Settings</h6>
-                                                <div class="row mb-3">
-                                                    <div class="col-md-6">
-                                                        <label class="form-label d-flex align-items-center">
-                                                            <span class="me-3">Enable Auto Backup</span>
-                                                            <label class="switch">
-                                                                <input type="checkbox" checked>
-                                                                <span class="slider"></span>
-                                                            </label>
-                                                        </label>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="form-label">Backup Frequency</label>
-                                                        <select class="form-select">
-                                                            <option value="daily">Daily</option>
-                                                            <option value="weekly">Weekly</option>
-                                                            <option value="monthly">Monthly</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="tab-pane fade" id="v-pills-security">
+                                    <h5>Security Settings</h5>
+                                    <form>
+                                        <div class="mb-3"><label class="form-label">Current Password</label><input type="password" class="form-control"></div>
+                                        <div class="mb-3"><label class="form-label">New Password</label><input type="password" class="form-control"></div>
+                                        <div class="mb-3"><label class="form-label">Confirm New Password</label><input type="password" class="form-control"></div>
+                                        <button type="submit" class="btn btn-primary">Update Password</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
     
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        // Add event listeners for form submissions
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle form submissions
-            const forms = document.querySelectorAll('form');
-            forms.forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    // Add your form submission logic here
-                    alert('Settings saved successfully!');
-                });
-            });
-            
-            // Handle test email button
-            const testEmailBtn = document.querySelector('button[type="button"]');
-            if(testEmailBtn && testEmailBtn.textContent.includes('Test Email')) {
-                testEmailBtn.addEventListener('click', function() {
-                    alert('Test email sent!');
-                });
-            }
-            
-            console.log('Settings page loaded');
-        });
-    </script>
 </body>
-</html> 
+</html>
