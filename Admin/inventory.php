@@ -232,7 +232,6 @@ $statuses = ['All', 'In Stock', 'Low Stock', 'Out of Stock'];
                                             <div class="btn-group">
                                                 <button class="btn btn-sm btn-outline-primary" onclick="viewItem(<?php echo $item['id']; ?>)" title="View"><i class="bi bi-eye"></i></button>
                                                 <button class="btn btn-sm btn-outline-success" onclick="addStock(<?php echo $item['id']; ?>)" title="Add Stock"><i class="bi bi-plus-circle"></i></button>
-                                                <button class="btn btn-sm btn-outline-info" onclick="viewHistory(<?php echo $item['id']; ?>)" title="History"><i class="bi bi-clock-history"></i></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -313,7 +312,6 @@ $statuses = ['All', 'In Stock', 'Low Stock', 'Out of Stock'];
     <script>
         function viewItem(itemId) { alert('View inventory details for item ID: ' + itemId); }
         function addStock(itemId) { alert('Add stock for item ID: ' + itemId); }
-        function viewHistory(itemId) { alert('View stock history for item ID: ' + itemId); }
     </script>
 </body>
 </html>

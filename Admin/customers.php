@@ -94,7 +94,6 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
         .admin-dropdown-item{ font-weight:700; font-size:0.95rem; color:#212529; display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem }
         .dropdown-menu .admin-dropdown-item i{ width:20px; display:inline-flex; align-items:center; justify-content:center; }
 
-        /* --- NEW RESPONSIVE STYLES --- */
         @media (max-width: 991.98px) {
             .sidebar {
                 position: fixed;
@@ -200,7 +199,7 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
                                         <th>Orders</th>
                                         <th>Total Spent</th>
                                         <th>Status</th>
-                                        <th>Actions</th>
+                                        <th>Mail</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -231,11 +230,9 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
                                             </span>
                                         </td>
                                         <td>
-                                            <div class="btn-group">
-                                                <button class="btn btn-sm btn-outline-primary" onclick="viewCustomer(<?php echo $customer['id']; ?>)" title="View"><i class="bi bi-eye"></i></button>
-                                                <button class="btn btn-sm btn-outline-info" onclick="editCustomer(<?php echo $customer['id']; ?>)" title="Edit"><i class="bi bi-pencil"></i></button>
-                                                <button class="btn btn-sm btn-outline-warning" onclick="sendEmail(<?php echo $customer['id']; ?>)" title="Send Email"><i class="bi bi-envelope"></i></button>
-                                            </div>
+                                            <button class="btn btn-sm btn-outline-warning" onclick="sendEmail(<?php echo $customer['id']; ?>)" title="Send Email">
+                                                <i class="bi bi-envelope"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -274,8 +271,7 @@ $cities = ['All', 'New Delhi', 'Gurgaon', 'Mumbai', 'Bangalore', 'Kolkata', 'Hyd
         });
     </script>
     <script>
-        function viewCustomer(customerId) { alert('View customer details for: ' + customerId); }
-        function editCustomer(customerId) { alert('Edit customer: ' + customerId); }
+        // REMOVED UNUSED JAVASCRIPT FUNCTIONS
         function sendEmail(customerId) { alert('Send email to customer: ' + customerId); }
     </script>
 </body>
