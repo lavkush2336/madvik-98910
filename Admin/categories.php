@@ -34,19 +34,13 @@ $parent_categories = ['None', 'Ethnic Wear', 'Western Wear', 'Accessories'];
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Reset & layout fixes */
         *, *::before, *::after { box-sizing: border-box; }
         html, body { overflow-x: hidden; }
-
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f8f9fa;
-            -webkit-font-smoothing:antialiased;
-            -moz-osx-font-smoothing:grayscale;
             color: #0f172a;
         }
-
-        /* Sidebar */
         .sidebar {
             background: linear-gradient(135deg, #f8c9d8 0%, #f4b6cc 100%);
             min-height: 100vh;
@@ -55,7 +49,6 @@ $parent_categories = ['None', 'Ethnic Wear', 'Western Wear', 'Accessories'];
             left: 0;
             width: 240px;
             z-index: 1000;
-            overflow-y: auto;
         }
         .sidebar .nav-link {
             color: #2d2d2d;
@@ -63,100 +56,36 @@ $parent_categories = ['None', 'Ethnic Wear', 'Western Wear', 'Accessories'];
             border-radius: 0.5rem;
             margin: 0.25rem 0;
             transition: all 0.3s ease;
-            display: block;
-            align-items: center;
         }
-        .sidebar .nav-link.active {
+        .sidebar .nav-link.active, .sidebar .nav-link:hover {
             background-color: rgba(255, 255, 255, 0.2);
             color: #2d2d2d;
-            box-shadow: none;
-            width: 100%;
         }
-        .sidebar .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.12);
-            color: #2d2d2d;
+        .main-content {
+            margin-left: 240px;
         }
-
-        /* Stats cards */
+        .navbar { background: white; box-shadow: 0 6px 18px rgba(15,23,42,0.06); padding:.6rem 1rem }
+        .navbar h4.mb-0{ font-size:1.5rem; font-weight:800; }
         .stats-card {
             background: white;
             border-radius: 1rem;
             padding: 1.25rem;
             box-shadow: 0 6px 18px rgba(15,23,42,0.06);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
-        .stats-card:hover { transform: translateY(-5px); box-shadow: 0 12px 36px rgba(15,23,42,0.08); }
-
-        /* Main content area - ensure no horizontal overflow */
-        .main-content {
-            margin-left: 240px;
-            max-width: calc(100% - 240px);
-            background-color: #f8f9fa;
-            font-size: 0.96rem;
-        }
-
-        /* Navbar & main title */
-        .navbar { background: white; box-shadow: 0 6px 18px rgba(15,23,42,0.06); padding:.6rem 1rem }
-        .navbar .container-fluid h4.mb-0{ font-size:1.5rem; font-weight:800; letter-spacing:-0.2px; margin:0; color:#0f172a }
-
-        /* Table/card containers */
         .table-container { background: white; border-radius: 1rem; padding: 1.25rem; box-shadow: 0 6px 18px rgba(15,23,42,0.04); }
-
-        /* Section headings - stronger hierarchy */
-        .table-container h5,
-        .stats-card h5,
-        .table-container .h5,
-        .main-content h5 { font-size:1.05rem; font-weight:700; color:#0f172a; margin-bottom:.75rem }
-
-        /* Tables: readable and consistent */
-        table { font-size:.95rem }
-        thead th { font-weight:700; font-size:.98rem; background-color: #f8f9fa; }
-        .table tbody tr td, .table thead th { padding:.75rem .9rem; vertical-align:middle }
-        .table-responsive { overflow-x:auto }
-
         .category-image {
             width: 50px;
             height: 50px;
             border-radius: 10px;
             object-fit: cover;
         }
-        
-        /* Reusable admin dropdown item style: bold, clear typography with icon alignment */
-        .admin-dropdown-item{ font-weight:700; font-size:0.95rem; color:#212529; display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem }
-        .dropdown-menu .admin-dropdown-item i{ width:20px; display:inline-flex; align-items:center; justify-content:center; font-size:1rem }
-        
-        /* --- NEW RESPONSIVE STYLES --- */
         @media (max-width: 991.98px) {
             .sidebar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 240px;
-                height: 100%;
-                z-index: 1030;
                 transform: translateX(-100%);
                 transition: transform 0.3s ease-in-out;
             }
-            .sidebar.show {
-                transform: translateX(0);
-            }
-            .main-content {
-                margin-left: 0;
-                max-width: 100%;
-            }
-            .sidebar-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 1020;
-                display: none;
-            }
-            .sidebar-overlay.show {
-                display: block;
-            }
+            .sidebar.show { transform: translateX(0); }
+            .main-content { margin-left: 0; }
         }
     </style>
 </head>
@@ -165,12 +94,9 @@ $parent_categories = ['None', 'Ethnic Wear', 'Western Wear', 'Accessories'];
         <div class="row">
             <div class="col-md-3 col-lg-2 sidebar p-3" id="sidebar">
                 <div class="text-center mb-4">
-                    <h4 class="fw-bold text-dark">
-                        <i class="bi bi-heart-fill text-danger me-2"></i>ManavikFab
-                    </h4>
+                    <h4 class="fw-bold text-dark"><i class="bi bi-heart-fill text-danger me-2"></i>ManavikFab</h4>
                     <small class="text-muted">Admin Panel</small>
                 </div>
-                
                 <nav class="nav flex-column">
                     <a class="nav-link" href="index.php"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
                     <a class="nav-link" href="orders.php"><i class="bi bi-cart3 me-2"></i>Orders</a>
@@ -188,26 +114,22 @@ $parent_categories = ['None', 'Ethnic Wear', 'Western Wear', 'Accessories'];
             <div class="col-md-9 col-lg-10 main-content p-4">
                 <nav class="navbar navbar-expand-lg">
                     <div class="container-fluid">
-                        <button class="btn btn-outline-secondary d-lg-none me-3" type="button" id="sidebarToggle">
-                            <i class="bi bi-list"></i>
-                        </button>
+                        <button class="btn btn-outline-secondary d-lg-none me-3" type="button" id="sidebarToggle"><i class="bi bi-list"></i></button>
                         <h4 class="mb-0">Categories Management</h4>
-                        <div class="d-flex align-items-center">
-                            <button class="btn btn-success me-2">
+                        <div class="d-flex align-items-center ms-auto">
+                             <button class="btn btn-success me-2">
                                 <i class="bi bi-tags me-2"></i>Add Brand
                             </button>
                             <button class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
                                 <i class="bi bi-plus-circle me-2"></i>Add Category
                             </button>
                             <div class="dropdown">
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                    <i class="bi bi-person-circle me-2"></i>Admin
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item admin-dropdown-item" href="profile.php"><i class="bi bi-person me-0"></i>Profile</a></li>
-                                    <li><a class="dropdown-item admin-dropdown-item" href="settings.php"><i class="bi bi-gear me-0"></i>Settings</a></li>
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"><i class="bi bi-person-circle me-2"></i>Admin</button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                                    <li><a class="dropdown-item" href="#">Settings</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item admin-dropdown-item" href="logout.php"><i class="bi bi-box-arrow-right me-0"></i>Logout</a></li>
+                                    <li><a class="dropdown-item" href="#">Logout</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -215,62 +137,6 @@ $parent_categories = ['None', 'Ethnic Wear', 'Western Wear', 'Accessories'];
                 </nav>
 
                 <div class="p-4">
-                    <div class="row g-4 mb-4">
-                        <div class="col-md-3">
-                            <div class="stats-card">
-                                <h5><?php echo count($categories); ?></h5>
-                                <small class="text-muted">Total Categories</small>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="stats-card">
-                                <h5><?php echo count(array_filter($categories, function($category) { return $category['status'] == 'Active'; })); ?></h5>
-                                <small class="text-muted">Active Categories</small>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="stats-card">
-                                <h5><?php echo array_sum(array_column($categories, 'products_count')); ?></h5>
-                                <small class="text-muted">Total Products</small>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="stats-card">
-                                <h5><?php echo count(array_filter($categories, function($category) { return $category['parent_category'] !== null; })); ?></h5>
-                                <small class="text-muted">Sub Categories</small>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="table-container mb-4">
-                        <h5 class="mb-3"><i class="bi bi-funnel me-2"></i>Filters</h5>
-                        <form class="row g-3">
-                            <div class="col-md-3">
-                                <label class="form-label">Status</label>
-                                <select class="form-select">
-                                    <?php foreach($statuses as $status): ?>
-                                        <option value="<?php echo strtolower($status); ?>"><?php echo $status; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Parent Category</label>
-                                <select class="form-select">
-                                    <?php foreach($parent_categories as $parent): ?>
-                                        <option value="<?php echo urlencode($parent); ?>"><?php echo $parent; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">Search</label>
-                                <input type="text" class="form-control" placeholder="Search by category name...">
-                            </div>
-                            <div class="col-md-2 d-flex align-items-end">
-                                <button type="submit" class="btn btn-primary w-100">Apply</button>
-                            </div>
-                        </form>
-                    </div>
-                    
                     <div class="table-container">
                         <div class="table-responsive">
                             <table class="table table-hover mb-0">
@@ -297,11 +163,7 @@ $parent_categories = ['None', 'Ethnic Wear', 'Western Wear', 'Accessories'];
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
-                                            <div class="text-truncate" style="max-width: 250px;">
-                                                <?php echo $category['description']; ?>
-                                            </div>
-                                        </td>
+                                        <td><div class="text-truncate" style="max-width: 250px;"><?php echo $category['description']; ?></div></td>
                                         <td>
                                             <?php if($category['parent_category']): ?>
                                                 <span class="badge bg-light text-dark"><?php echo $category['parent_category']; ?></span>
@@ -310,17 +172,13 @@ $parent_categories = ['None', 'Ethnic Wear', 'Western Wear', 'Accessories'];
                                             <?php endif; ?>
                                         </td>
                                         <td><?php echo $category['products_count']; ?></td>
-                                        <td>
-                                            <span class="badge bg-<?php echo $category['status'] == 'Active' ? 'success' : 'secondary'; ?>">
-                                                <?php echo $category['status']; ?>
-                                            </span>
-                                        </td>
+                                        <td><span class="badge bg-<?php echo $category['status'] == 'Active' ? 'success' : 'secondary'; ?>"><?php echo $category['status']; ?></span></td>
                                         <td><?php echo date('M d, Y', strtotime($category['created_date'])); ?></td>
                                         <td>
                                             <div class="btn-group">
-                                                <button class="btn btn-sm btn-outline-primary" onclick="viewCategory(<?php echo $category['id']; ?>)" title="View"><i class="bi bi-eye"></i></button>
-                                                <button class="btn btn-sm btn-outline-success" onclick="editCategory(<?php echo $category['id']; ?>)" title="Edit"><i class="bi bi-pencil"></i></button>
-                                                <button class="btn btn-sm btn-outline-danger" onclick="deleteCategory(<?php echo $category['id']; ?>)" title="Delete"><i class="bi bi-trash"></i></button>
+                                                <button class="btn btn-sm btn-outline-primary" title="View"><i class="bi bi-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline-success" title="Edit"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-sm btn-outline-danger" title="Delete"><i class="bi bi-trash"></i></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -342,48 +200,44 @@ $parent_categories = ['None', 'Ethnic Wear', 'Western Wear', 'Accessories'];
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="addCategoryForm">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Category Name *</label>
-                                <input type="text" class="form-control" placeholder="Enter category name" required>
+                                <input type="text" id="categoryName" class="form-control" placeholder="Enter category name" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Slug</label>
-                                <input type="text" class="form-control" placeholder="e.g., ethnic-wear">
+                                <input type="text" id="categorySlug" class="form-control" placeholder="e.g., ethnic-wear">
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Description</label>
-                            <textarea class="form-control" rows="3" placeholder="Enter a brief category description"></textarea>
+                            <textarea class="form-control" id="categoryDescription" rows="3" placeholder="Enter a brief category description"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Parent Category</label>
-                                <select class="form-select">
+                                <select class="form-select" id="parentCategory">
                                     <option value="">No Parent</option>
-                                    <?php foreach($parent_categories as $parent): ?>
+                                    <?php foreach(array_filter($parent_categories, function($p) { return $p !== 'None'; }) as $parent): ?>
                                         <option value="<?php echo $parent; ?>"><?php echo $parent; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Status</label>
-                                <select class="form-select">
+                                <select class="form-select" id="categoryStatus">
                                     <option value="Active">Active</option>
                                     <option value="Inactive">Inactive</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Category Image</label>
-                            <input type="file" class="form-control" accept="image/*">
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Add Category</button>
+                    <button type="button" class="btn btn-primary" id="saveCategoryBtn">Add Category</button>
                 </div>
             </div>
         </div>
@@ -392,36 +246,61 @@ $parent_categories = ['None', 'Ethnic Wear', 'Western Wear', 'Accessories'];
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const sidebar = document.getElementById('sidebar');
-            const sidebarToggle = document.getElementById('sidebarToggle');
+            // --- NEW SCRIPT TO MAKE THE MODAL FORM WORK ---
 
-            if (sidebarToggle) {
-                const overlay = document.createElement('div');
-                overlay.className = 'sidebar-overlay';
-                document.body.appendChild(overlay);
+            const saveButton = document.getElementById('saveCategoryBtn');
+            const addCategoryModal = new bootstrap.Modal(document.getElementById('addCategoryModal'));
+            const categoryForm = document.getElementById('addCategoryForm');
+            const tableBody = document.querySelector('.table tbody');
 
-                const closeSidebar = () => {
-                    sidebar.classList.remove('show');
-                    overlay.classList.remove('show');
-                };
+            saveButton.addEventListener('click', function() {
+                // 1. Get data from the form fields
+                const categoryName = document.getElementById('categoryName').value;
+                const description = document.getElementById('categoryDescription').value;
+                const parentCategory = document.getElementById('parentCategory').value;
+                const status = document.getElementById('categoryStatus').value;
+                
+                // Simple validation
+                if (!categoryName) {
+                    alert('Category Name is required.');
+                    return;
+                }
 
-                sidebarToggle.addEventListener('click', function () {
-                    sidebar.classList.toggle('show');
-                    overlay.classList.toggle('show');
-                });
+                // 2. Create the HTML for the new table row
+                const newRow = `
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="images/categories/default.jpg" alt="${categoryName}" class="category-image me-3">
+                                <div>
+                                    <h6 class="mb-0 fw-bold">${categoryName}</h6>
+                                    <small class="text-muted">ID: New</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td><div class="text-truncate" style="max-width: 250px;">${description}</div></td>
+                        <td>${parentCategory ? `<span class="badge bg-light text-dark">${parentCategory}</span>` : '<span class="text-muted">—</span>'}</td>
+                        <td>0</td>
+                        <td><span class="badge bg-${status === 'Active' ? 'success' : 'secondary'}">${status}</span></td>
+                        <td>${new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-outline-primary" title="View"><i class="bi bi-eye"></i></button>
+                                <button class="btn btn-sm btn-outline-success" title="Edit"><i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-sm btn-outline-danger" title="Delete"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
 
-                overlay.addEventListener('click', closeSidebar);
-            }
+                // 3. Insert the new row at the top of the table
+                tableBody.insertAdjacentHTML('afterbegin', newRow);
+
+                // 4. Reset the form and hide the modal
+                categoryForm.reset();
+                addCategoryModal.hide();
+            });
         });
-    </script>
-    <script>
-        function viewCategory(categoryId) { alert('View category details for: ' + categoryId); }
-        function editCategory(categoryId) { alert('Edit category: ' + categoryId); }
-        function deleteCategory(categoryId) {
-            if(confirm('Are you sure you want to delete this category?')) {
-                alert('Delete category: ' + categoryId);
-            }
-        }
     </script>
 </body>
 </html>
