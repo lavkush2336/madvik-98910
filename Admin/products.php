@@ -80,7 +80,6 @@ $categories = ['All', 'Ethnic Wear', 'Western Wear', 'Sarees', 'Lehengas', 'Acce
         .admin-dropdown-item{ font-weight:700; font-size:0.95rem; color:#212529; display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem }
         .dropdown-menu .admin-dropdown-item i{ width:20px; display:inline-flex; align-items:center; justify-content:center; }
 
-        /* --- NEW RESPONSIVE STYLES --- */
         @media (max-width: 991.98px) {
             .sidebar {
                 position: fixed;
@@ -245,7 +244,18 @@ $categories = ['All', 'Ethnic Wear', 'Western Wear', 'Sarees', 'Lehengas', 'Acce
                             <div class="col-md-6 mb-3"><label class="form-label">Stock Quantity *</label><input type="number" class="form-control" required></div>
                         </div>
                         <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" rows="3"></textarea></div>
-                        <div class="mb-3"><label class="form-label">Product Images</label><input type="file" class="form-control" multiple></div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Product Images (up to 5)</label>
+                            <div id="product-images-container">
+                                <input type="file" class="form-control mb-2" name="product_images[]" accept="image/*">
+                                <input type="file" class="form-control mb-2" name="product_images[]" accept="image/*">
+                                <input type="file" class="form-control mb-2" name="product_images[]" accept="image/*">
+                                <input type="file" class="form-control mb-2" name="product_images[]" accept="image/*">
+                                <input type="file" class="form-control" name="product_images[]" accept="image/*">
+                            </div>
+                        </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -259,9 +269,9 @@ $categories = ['All', 'Ethnic Wear', 'Western Wear', 'Sarees', 'Lehengas', 'Acce
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Sidebar toggle script
             const sidebar = document.getElementById('sidebar');
             const sidebarToggle = document.getElementById('sidebarToggle');
-
             if (sidebarToggle) {
                 const overlay = document.createElement('div');
                 overlay.className = 'sidebar-overlay';
