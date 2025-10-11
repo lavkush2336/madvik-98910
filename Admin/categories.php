@@ -111,6 +111,11 @@ $parent_categories_options = ['Ethnic Wear', 'Western Wear', 'Accessories'];
                                 <i class="bi bi-plus-circle me-2"></i>Add Category
                             </button>
                             <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-person-circle me-2"></i>Admin
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item admin-dropdown-item" href="settings.php"><i class="bi bi-gear me-0"></i>Settings</a></li>
                                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"><i class="bi bi-person-circle me-2"></i>Admin</button>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li><a class="dropdown-item" href="#">Profile</a></li>

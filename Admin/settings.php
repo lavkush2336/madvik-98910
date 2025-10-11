@@ -63,7 +63,7 @@ $payment_settings = ['razorpay_key' => 'rzp_test_********', 'cod_enabled' => tru
             background-color: #f4b6cc;
             color: #2d2d2d;
         }
-        .admin-dropdown-item{ font-weight:700; font-size:0.95rem; color:#212529; display:flex; align-items-center; gap:0.5rem; padding:0.45rem 0.9rem }
+        .admin-dropdown-item{ font-weight:700; font-size:0.95rem; color:#212529; display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem }
         .dropdown-menu .admin-dropdown-item i{ width:20px; display:inline-flex; align-items:center; justify-content:center; }
         
         /* --- NEW RESPONSIVE STYLES --- */
@@ -135,7 +135,6 @@ $payment_settings = ['razorpay_key' => 'rzp_test_********', 'cod_enabled' => tru
                                 <i class="bi bi-person-circle me-2"></i>Admin
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item admin-dropdown-item" href="profile.php"><i class="bi bi-person"></i>Profile</a></li>
                                 <li><a class="dropdown-item admin-dropdown-item" href="settings.php"><i class="bi bi-gear"></i>Settings</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item admin-dropdown-item" href="logout.php"><i class="bi bi-box-arrow-right"></i>Logout</a></li>

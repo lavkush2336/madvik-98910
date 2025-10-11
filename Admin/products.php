@@ -19,6 +19,7 @@ $products = [
 ];
 
 $categories = ['All', 'Ethnic Wear', 'Western Wear', 'Sarees', 'Lehengas', 'Accessories'];
+$brands = ['ManavikFab Originals', 'Glamour Attire', 'Elegance Fashion', 'Traditional Trends'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -152,7 +153,6 @@ $categories = ['All', 'Ethnic Wear', 'Western Wear', 'Sarees', 'Lehengas', 'Acce
                                     <i class="bi bi-person-circle me-2"></i>Admin
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item admin-dropdown-item" href="profile.php"><i class="bi bi-person"></i>Profile</a></li>
                                     <li><a class="dropdown-item admin-dropdown-item" href="settings.php"><i class="bi bi-gear"></i>Settings</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item admin-dropdown-item" href="logout.php"><i class="bi bi-box-arrow-right"></i>Logout</a></li>
@@ -240,10 +240,25 @@ $categories = ['All', 'Ethnic Wear', 'Western Wear', 'Sarees', 'Lehengas', 'Acce
                             <div class="col-md-6 mb-3"><label class="form-label">Category *</label><select class="form-select" required><option>Select Category</option></select></div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 mb-3"><label class="form-label">Price (₹) *</label><input type="number" class="form-control" required></div>
                             <div class="col-md-6 mb-3"><label class="form-label">Stock Quantity *</label><input type="number" class="form-control" required></div>
+                            <div class="col-md-6 mb-3"><label class="form-label">Price (₹) *</label><input type="number" class="form-control" required></div>
                         </div>
+                        <div class="row">
+                        <div class="col mb-3">
+                                <label class="form-label">Brand *</label>
+                                <select class="form-select" required>
+                                    <option>Select Brand</option>
+                                    <?php foreach($brands as $brand): ?>
+                                        <option value="<?php echo htmlspecialchars($brand); ?>"><?php echo htmlspecialchars($brand); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>    
+                        
+                        </div>
+                        
                         <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" rows="3"></textarea></div>
+<!-- <<<<<<< HEAD -->
+<!-- ======= -->
                         
                         <div class="mb-3">
                             <label class="form-label">Product Images (up to 5)</label>
@@ -256,6 +271,7 @@ $categories = ['All', 'Ethnic Wear', 'Western Wear', 'Sarees', 'Lehengas', 'Acce
                             </div>
                         </div>
 
+<!-- >>>>>>> 8491fb9f88fdf105077c5694a872010c8bc88e3b -->
                     </form>
                 </div>
                 <div class="modal-footer">

@@ -268,7 +268,6 @@ $top_products = [
                                     <i class="bi bi-person-circle me-2"></i>Admin
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item admin-dropdown-item" href="profile.php"><i class="bi bi-person me-0"></i>Profile</a></li>
                                     <li><a class="dropdown-item admin-dropdown-item" href="settings.php"><i class="bi bi-gear me-0"></i>Settings</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item admin-dropdown-item" href="logout.php"><i class="bi bi-box-arrow-right me-0"></i>Logout</a></li>

@@ -151,7 +151,6 @@ $payment_statuses = ['All', 'Pending', 'Paid', 'Failed', 'Refunded'];
                                 <i class="bi bi-person-circle me-2"></i>Admin
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item admin-dropdown-item" href="profile.php"><i class="bi bi-person"></i>Profile</a></li>
                                 <li><a class="dropdown-item admin-dropdown-item" href="settings.php"><i class="bi bi-gear"></i>Settings</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item admin-dropdown-item" href="logout.php"><i class="bi bi-box-arrow-right"></i>Logout</a></li>
