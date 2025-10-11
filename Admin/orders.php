@@ -226,7 +226,7 @@ $payment_statuses = ['All', 'Pending', 'Paid', 'Failed', 'Refunded'];
                                         <td>
                                             <div class="btn-group">
                                                 <button class="btn btn-sm btn-outline-primary" title="View"><i class="bi bi-eye"></i></button>
-                                                <button class="btn btn-sm btn-outline-success" title="Update"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-sm btn-outline-success" title="Update" data-bs-toggle="modal" data-bs-target="#updateStatusModal"><i class="bi bi-pencil"></i></button>
                                                 <button class="btn btn-sm btn-outline-info" title="Invoice"><i class="bi bi-printer"></i></button>
                                             </div>
                                         </td>
@@ -236,6 +236,25 @@ $payment_statuses = ['All', 'Pending', 'Paid', 'Failed', 'Refunded'];
                             </table>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateStatusModalLabel">Update Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-grid gap-2">
+                    <button type="button" class="btn btn-secondary w-50 mx-auto">On Hold</button>
+                    <button type="button" class="btn btn-primary w-50 mx-auto">Confirm</button>
+                    <button type="button" class="btn btn-warning w-50 mx-auto">Processing</button>
+                    <button type="button" class="btn btn-info w-50 mx-auto">In Transit</button>
+                    <button type="button" class="btn btn-success w-50 mx-auto">Delivered</button>
+                    <button type="button" class="btn btn-danger w-50 mx-auto">Canceled</button>
                 </div>
             </div>
         </div>
