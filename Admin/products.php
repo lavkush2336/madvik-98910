@@ -210,7 +210,7 @@ $brands = ['ManavikFab Originals', 'Glamour Attire', 'Elegance Fashion', 'Tradit
                                         </td>
                                         <td>
                                             <div class="btn-group">
-                                                <button class="btn btn-sm btn-outline-primary" title="Edit"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-sm btn-outline-primary" title="Edit" data-bs-toggle="modal" data-bs-target="#editProductModal"><i class="bi bi-pencil"></i></button>
                                                 <button class="btn btn-sm btn-outline-info" title="View"><i class="bi bi-eye"></i></button>
                                                 <button class="btn btn-sm btn-outline-danger" title="Delete"><i class="bi bi-trash"></i></button>
                                             </div>
@@ -257,8 +257,6 @@ $brands = ['ManavikFab Originals', 'Glamour Attire', 'Elegance Fashion', 'Tradit
                         </div>
                         
                         <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" rows="3"></textarea></div>
-<!-- <<<<<<< HEAD -->
-<!-- ======= -->
                         
                         <div class="mb-3">
                             <label class="form-label">Product Images (up to 5)</label>
@@ -271,12 +269,63 @@ $brands = ['ManavikFab Originals', 'Glamour Attire', 'Elegance Fashion', 'Tradit
                             </div>
                         </div>
 
-<!-- >>>>>>> 8491fb9f88fdf105077c5694a872010c8bc88e3b -->
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary">Add Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="editProductModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3"><label class="form-label">Product Name *</label><input type="text" class="form-control" required></div>
+                            <div class="col-md-6 mb-3"><label class="form-label">Category *</label><select class="form-select" required><option>Select Category</option></select></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3"><label class="form-label">Stock Quantity *</label><input type="number" class="form-control" required></div>
+                            <div class="col-md-6 mb-3"><label class="form-label">Price (₹) *</label><input type="number" class="form-control" required></div>
+                        </div>
+                        <div class="row">
+                        <div class="col mb-3">
+                                <label class="form-label">Brand *</label>
+                                <select class="form-select" required>
+                                    <option>Select Brand</option>
+                                    <?php foreach($brands as $brand): ?>
+                                        <option value="<?php echo htmlspecialchars($brand); ?>"><?php echo htmlspecialchars($brand); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>    
+                        
+                        </div>
+                        
+                        <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" rows="3"></textarea></div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Product Images (up to 5)</label>
+                            <div id="product-images-container">
+                                <input type="file" class="form-control mb-2" name="product_images[]" accept="image/*">
+                                <input type="file" class="form-control mb-2" name="product_images[]" accept="image/*">
+                                <input type="file" class="form-control mb-2" name="product_images[]" accept="image/*">
+                                <input type="file" class="form-control mb-2" name="product_images[]" accept="image/*">
+                                <input type="file" class="form-control" name="product_images[]" accept="image/*">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save Changes</button>
                 </div>
             </div>
         </div>
