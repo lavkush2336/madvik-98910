@@ -81,7 +81,6 @@ $brands = ['ManavikFab Originals', 'Glamour Attire', 'Elegance Fashion', 'Tradit
         .admin-dropdown-item{ font-weight:700; font-size:0.95rem; color:#212529; display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem }
         .dropdown-menu .admin-dropdown-item i{ width:20px; display:inline-flex; align-items:center; justify-content:center; }
 
-        /* --- NEW RESPONSIVE STYLES --- */
         @media (max-width: 991.98px) {
             .sidebar {
                 position: fixed;
@@ -154,7 +153,6 @@ $brands = ['ManavikFab Originals', 'Glamour Attire', 'Elegance Fashion', 'Tradit
                                     <i class="bi bi-person-circle me-2"></i>Admin
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item admin-dropdown-item" href="profile.php"><i class="bi bi-person"></i>Profile</a></li>
                                     <li><a class="dropdown-item admin-dropdown-item" href="settings.php"><i class="bi bi-gear"></i>Settings</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item admin-dropdown-item" href="logout.php"><i class="bi bi-box-arrow-right"></i>Logout</a></li>
@@ -242,7 +240,11 @@ $brands = ['ManavikFab Originals', 'Glamour Attire', 'Elegance Fashion', 'Tradit
                             <div class="col-md-6 mb-3"><label class="form-label">Category *</label><select class="form-select" required><option>Select Category</option></select></div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3"><label class="form-label">Stock Quantity *</label><input type="number" class="form-control" required></div>
+                            <div class="col-md-6 mb-3"><label class="form-label">Price (₹) *</label><input type="number" class="form-control" required></div>
+                        </div>
+                        <div class="row">
+                        <div class="col mb-3">
                                 <label class="form-label">Brand *</label>
                                 <select class="form-select" required>
                                     <option>Select Brand</option>
@@ -250,17 +252,26 @@ $brands = ['ManavikFab Originals', 'Glamour Attire', 'Elegance Fashion', 'Tradit
                                         <option value="<?php echo htmlspecialchars($brand); ?>"><?php echo htmlspecialchars($brand); ?></option>
                                     <?php endforeach; ?>
                                 </select>
-                            </div>
-                            <div class="col-md-6 mb-3"><label class="form-label">Price (₹) *</label><input type="number" class="form-control" required></div>
+                            </div>    
+                        
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3"><label class="form-label">Stock Quantity *</label><input type="number" class="form-control" required></div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Product Images</label>
-                                <input type="file" class="form-control" multiple>
-                            </div>
-                        </div>
+                        
                         <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" rows="3"></textarea></div>
+<!-- <<<<<<< HEAD -->
+<!-- ======= -->
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Product Images (up to 5)</label>
+                            <div id="product-images-container">
+                                <input type="file" class="form-control mb-2" name="product_images[]" accept="image/*">
+                                <input type="file" class="form-control mb-2" name="product_images[]" accept="image/*">
+                                <input type="file" class="form-control mb-2" name="product_images[]" accept="image/*">
+                                <input type="file" class="form-control mb-2" name="product_images[]" accept="image/*">
+                                <input type="file" class="form-control" name="product_images[]" accept="image/*">
+                            </div>
+                        </div>
+
+<!-- >>>>>>> 8491fb9f88fdf105077c5694a872010c8bc88e3b -->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -274,9 +285,9 @@ $brands = ['ManavikFab Originals', 'Glamour Attire', 'Elegance Fashion', 'Tradit
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Sidebar toggle script
             const sidebar = document.getElementById('sidebar');
             const sidebarToggle = document.getElementById('sidebarToggle');
-
             if (sidebarToggle) {
                 const overlay = document.createElement('div');
                 overlay.className = 'sidebar-overlay';
