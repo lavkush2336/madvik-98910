@@ -193,6 +193,9 @@ $parent_categories = ['None', 'Ethnic Wear', 'Western Wear', 'Accessories'];
                         </button>
                         <h4 class="mb-0">Categories Management</h4>
                         <div class="d-flex align-items-center">
+                            <button class="btn btn-success me-2">
+                                <i class="bi bi-tags me-2"></i>Add Brand
+                            </button>
                             <button class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
                                 <i class="bi bi-plus-circle me-2"></i>Add Category
                             </button>
